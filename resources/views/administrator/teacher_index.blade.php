@@ -82,6 +82,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">ФИО</th>
                                     <th scope="col">Почта</th>
+                                    <th scope="col">Филиал</th>
                                     <th scope="col">Опции</th>
                                 </tr>
                             </thead>
@@ -91,6 +92,7 @@
                                         <th>{{ $key+1 }}</th>
                                         <td>{{ $teacher->second_name }} {{ $teacher->first_name }} {{ $teacher->last_name }}</td>
                                         <td>{{ $teacher->email }}</td>
+                                        <td>{{ $teacher->city ? $teacher->city->title : 'Без филиала' }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <form action="{{ route('teachers.updateLetter', ['teacher'=> $teacher->id]) }}" method="POST">

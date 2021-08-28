@@ -26,14 +26,19 @@ class City extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
-    public function city_teachers() 
-    {
-        return $this->belongsToMany(User::class, 'city_teacher_student', 'city_id',  'teacher_id')->withPivot('student_id', 'city_id', 'teacher_id');
-    }
-    public function city_students() 
-    {
-        return $this->belongsToMany(User::class, 'city_teacher_student', 'city_id', 'student_id')->withPivot('student_id', 'city_id', 'teacher_id');
-    }
+
+    // public function city_teachers() 
+    // {
+    //     return $this->belongsToMany(User::class, 'city_teacher_student', 'city_id',  'teacher_id')->withPivot('student_id', 'city_id', 'teacher_id');
+    // }
+    // public function city_students() 
+    // {
+    //     return $this->belongsToMany(User::class, 'city_teacher_student', 'city_id', 'student_id')->withPivot('student_id', 'city_id', 'teacher_id');
+    // }
     
 }

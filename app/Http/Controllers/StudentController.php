@@ -93,6 +93,7 @@ class StudentController extends Controller
             'city_id' => Auth::user()->city_id,
             'tel_phone' => $request->tel_phone,
             'birthday' => Carbon::parse($request->birthday),
+            'created_by' => Auth::user()->id,
         ]);
 
         $teacher = $request->user();
