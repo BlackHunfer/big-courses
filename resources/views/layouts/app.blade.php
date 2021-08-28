@@ -51,7 +51,7 @@
                 </div>
             @endif
 
-            @if(Session::has('messageTeacher'))
+            @if(Session::has('messageNoAutoHide'))
                 <div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-bs-autohide="false">
                     <div class="toast-header">
                         <!-- <img src="..." class="rounded me-2" alt="..."> -->
@@ -60,7 +60,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
                     </div>
                     <div class="toast-body">
-                        {{ Session::get('messageTeacher') }}
+                        {{ Session::get('messageNoAutoHide') }}
                     </div>
                 </div>
             @endif

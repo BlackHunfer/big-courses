@@ -8,10 +8,10 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Lang;
 
-class ResetPasswordTeacher extends Notification
+class ResetPasswordStudent extends Notification
 {
     use Queueable;
- /**
+/**
      * The password reset token.
      *
      * @var string
@@ -87,8 +87,8 @@ class ResetPasswordTeacher extends Notification
     protected function buildMailMessage($url)
     {
         return (new MailMessage)
-            ->subject(Lang::get('Уведомление о добавлении в качестве учителя'))
-            ->line(Lang::get('Вы были добавлены в качестве учителя'))
+            ->subject(Lang::get('Уведомление о добавлении в качестве ученика'))
+            ->line(Lang::get('Вы были добавлены в качестве ученика'))
             ->action(Lang::get('Обновить пароль'), $url)
             ->line(Lang::get('Эта ссылка для обновления пароля истечет через 24 часа'))
             ->line(Lang::get('Если вы не участник этого проекта, дальнейшие действия не требуются.'));

@@ -20,6 +20,8 @@ class RoleMiddleware
         if(!auth()->user()->hasRole($role)) {
             abort(404);
         }
+
+        //Если закомментить, то один роут доступен для нескольких ролей, но скорее всего не будут работать права для ролей
         if($permission !== null && !auth()->user()->can($permission)) {
             abort(404);
         }

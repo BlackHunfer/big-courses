@@ -13,11 +13,19 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Главная') }}
                     </x-nav-link>
                     @role('administrator')
+                    <x-nav-link :href="route('cities.index')" :active="request()->routeIs('cities.index')">
+                        {{ __('Филиалы') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('teachers.index')" :active="request()->routeIs('teachers.index')">
                         {{ __('Учителя') }}
+                    </x-nav-link>
+                    @endrole
+                    @role('teacher')
+                    <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
+                        {{ __('Ученики') }}
                     </x-nav-link>
                     @endrole
                 </div>

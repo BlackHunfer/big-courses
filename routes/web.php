@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,10 +24,30 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => 'role:administrator'], function() {
-    Route::resource('teachers', TeacherController::class)->except([
-        'show'
+    Route::resource('cities', CityController::class)->except([
+        'show', 'create'
     ]);
-    Route::post('/teachers/{teacher}/updatetoken', [TeacherController::class, 'updateToken'])->name('teachers.updateToken');
+    Route::resource('teachers', TeacherController::class)->except([
+        'show', 'create'
+    ]);
+    Route::post('/teachers/{teacher}/updateletter', [TeacherController::class, 'updateLetter'])->name('teachers.updateLetter');
+    
 });
+
+Route::group(['middleware' => 'role:teacher'], function() {
+    Route::resource('students', StudentController::class)->except([
+        'show', 'create'
+    ]);
+    Route::post('students/{student}/updateletter', [StudentController::class, 'updateLetter'])->name('students.updateLetter');
+});
+
+
+//Один роут для нескольких ролей. Но нужно закомментить строки в RoleMiddleware
+// Route::group(['middleware' => 'role:administrator,teacher'], function() {
+//     Route::resource('students', StudentController::class)->except([
+//         'show', 'create'
+//     ]);
+//     Route::post('students/{student}/updateletter', [StudentController::class, 'updateLetter'])->name('students.updateLetter');
+// });
 
 require __DIR__.'/auth.php';
