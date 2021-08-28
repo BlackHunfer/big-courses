@@ -27,6 +27,12 @@
                     <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
                         {{ __('Ученики') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('specialities.index')" :active="request()->routeIs('specialities.index')">
+                        {{ __('Специальности') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('groups.index')" :active="request()->routeIs('groups.index')">
+                        {{ __('Группы учеников') }}
+                    </x-nav-link>
                     @endrole
                 </div>
             </div>

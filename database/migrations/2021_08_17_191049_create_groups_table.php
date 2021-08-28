@@ -16,8 +16,10 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('speciality_id')->nullable();
-            $table->foreignId('city_id')->nullable();
+            $table->foreignId('admin_id')->constrained('users');
+            $table->foreignId('city_id')->constrained('cities')->nullable();
+            $table->foreignId('speciality_id')->constrained('specialities')->nullable();
+            $table->foreignId('created_by')->constrained('users')->nullable();
             $table->timestamps();
         });
     }

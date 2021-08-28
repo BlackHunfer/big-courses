@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SpecialityController;
+use App\Http\Controllers\GroupController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +41,15 @@ Route::group(['middleware' => 'role:teacher'], function() {
         'show', 'create'
     ]);
     Route::post('students/{student}/updateletter', [StudentController::class, 'updateLetter'])->name('students.updateLetter');
+
+    Route::resource('specialities', SpecialityController::class)->except([
+        'show', 'create'
+    ]);
+
+    Route::resource('groups', GroupController::class)->except([
+        'show', 'create'
+    ]);
+    Route::post('groups/{group}/{student}/ungroup', [GroupController::class, 'ungroup'])->name('groups.ungroup.student');
 });
 
 

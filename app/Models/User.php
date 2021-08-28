@@ -14,6 +14,7 @@ use App\Notifications\ResetPasswordTeacher;
 use App\Notifications\ResetPasswordStudent;
 use App\Models\User;
 use App\Models\City;
+use App\Models\Speciality;
 use App\Models\Group;
 use App\Models\Material;
 
@@ -70,9 +71,19 @@ class User extends Authenticatable
         return $this->belongsTo(City::class);
     }
 
+    public function specialities()
+    {
+        return $this->belongsTo(Speciality::class, 'id', 'admin_id');
+    }
+
     public function groups()
     {
-        return $this->belongsToMany(Group::class);
+        return $this->belongsToMany(Group::class, 'group_student', 'student_id', 'group_id')->withPivot('group_id', 'student_id');
+    }
+
+    public function admin_groups()
+    {
+        return $this->belongsTo(Group::class, 'id', 'admin_id');
     }
     
     public function materials()
