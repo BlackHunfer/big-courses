@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Theme extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -16,5 +17,9 @@ class Theme extends Model
      */
     protected $fillable = [
         'title',
+        'course_id',
+        'theme_id',
+        'order',
+        'created_by',
     ];
 }

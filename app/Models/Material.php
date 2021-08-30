@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -16,18 +16,16 @@ class Material extends Model
      * @var array
      */
     protected $fillable = [
-        'theme_id',
-        'user_id',
-        'material_type_id',
         'title',
-        'upload_file',
+        'course_id',
+        'theme_id',
+        'material_type_id',
         'text',
+        'upload_file',
+        'video',
+        'material_id',
+        'opens_after_day',
         'order',
+        'created_by',
     ];
-
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class)->withPivot('date_start', 'date_end', 'upload_file', 'result', 'grade')->withTimestamps();
-    }
 }

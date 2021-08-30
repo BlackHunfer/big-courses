@@ -15,8 +15,8 @@ class CreateResultQuestionsTable extends Migration
     {
         Schema::create('result_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id');
-            $table->foreignId('result_id');
+            // $table->foreignId('question_id');
+            // $table->foreignId('result_id');
             $table->text('student_answer')->nullable();
             $table->boolean('student_correct')->nullable();
         });

@@ -15,7 +15,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('material_id');
+            // $table->foreignId('material_id');
             $table->text('text');
             $table->text('hint')->nullable();
             $table->timestamps();

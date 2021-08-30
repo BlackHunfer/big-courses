@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TestStatus extends Model
+class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -16,5 +17,10 @@ class TestStatus extends Model
      */
     protected $fillable = [
         'title',
+        'description',
+        'admin_id',
+        'speciality_id',
+        'created_by',
     ];
+
 }

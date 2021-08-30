@@ -116,16 +116,6 @@ class User extends Authenticatable
     }
 
 
-    // public function teacher_cities() 
-    // {
-    //     return $this->belongsToMany(City::class, 'city_teacher_student', 'teacher_id', 'city_id')->withPivot('student_id', 'city_id', 'teacher_id');
-    // }
-    // public function student_cities() 
-    // {
-    //     return $this->belongsToMany(City::class, 'city_teacher_student', 'city_id', 'student_id')->withPivot('student_id', 'city_id', 'student_id');
-    // }
-
-
 
     public function sendPasswordResetNotification($token)
     {
