@@ -33,6 +33,7 @@ class User extends Authenticatable
         'name',
         'email',
         'city_id',
+        'speciality_id',
         'password',
         'first_name',
         'second_name',
@@ -74,6 +75,11 @@ class User extends Authenticatable
     public function specialities()
     {
         return $this->belongsTo(Speciality::class, 'id', 'admin_id');
+    }
+
+    public function speciality()
+    {
+        return $this->belongsTo(Speciality::class);
     }
 
     public function groups()

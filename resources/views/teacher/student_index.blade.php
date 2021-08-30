@@ -8,6 +8,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Ученики</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('groups.index') }}">Группы учеников</a>
+                </li>
+            </ul>
             <div class="p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="col-12">
                     <a class="mb-4 btn btn-primary" data-bs-toggle="collapse" href="#addStudentCollapse" role="button" aria-expanded="false" aria-controls="addStudentCollapse">

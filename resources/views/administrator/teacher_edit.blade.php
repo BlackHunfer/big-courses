@@ -76,6 +76,29 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="mb-3 row">
+                                    <label for="inputSpeciality" class="col-lg-2 col-form-label">Специальность</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="speciality_id" id="inputSpeciality" aria-label="Выберите специальность">
+                                            @if($specialities && $specialities->count())
+                                                @if($teacher->speciality_id)
+                                                    <option selected value="0">Без специальности</option>
+                                                @else
+                                                    <option value="0">Выберите специальность</option>
+                                                @endif
+                                                @foreach($specialities as $speciality)
+                                                    @if($teacher->speciality_id)
+                                                        <option value="{{ $speciality->id }}" @if($teacher->speciality_id == $speciality->id) selected @endif>{{ $speciality->title }}</option>
+                                                    @else
+                                                        <option value="{{ $speciality->id }}">{{ $speciality->title }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <option selected disabled>Список специальностей пуст</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <button type="submit" class="btn btn-success">Сохранить</button>

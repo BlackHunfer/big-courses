@@ -24,7 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('tel_phone')->nullable();
             $table->date('birthday')->nullable();
-            $table->foreignId('city_id')->constrained('cities');
+            $table->foreignId('city_id')->constrained('cities')->nullable();
+            $table->foreignId('speciality_id')->constrained('specialities')->nullable();
             $table->integer('created_by')->nullable();
             $table->rememberToken();
             $table->timestamps();

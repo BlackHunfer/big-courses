@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Speciality;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 class TeacherController extends Controller
@@ -26,11 +27,18 @@ class TeacherController extends Controller
         $teachers = $admin->admin_teachers()
         ->orderBy('id', 'asc')
         ->get();
+
         $cities = $admin->cities;
+
+        $specialities = $admin->specialities()
+            ->where("city_id", null)
+            ->orderBy('id', 'asc')
+            ->get();
 
         return view('administrator.teacher_index', [
             'teachers' => $teachers,
             'cities' => $cities,
+            'specialities' => $specialities,
         ]);
     }
 
@@ -73,6 +81,7 @@ class TeacherController extends Controller
             'password' => $hashed_random_password,
             'email' => $request->email,
             'city_id' => $request->city_id ? $request->city_id : null,
+            'speciality_id' => $request->speciality_id ? $request->speciality_id : null,
         ]);
 
         $admin = $request->user();
@@ -107,11 +116,17 @@ class TeacherController extends Controller
 
         $admin = $request->user();
         $cities = $admin->cities;
+
+        $specialities = $admin->specialities()
+            ->where("city_id", null)
+            ->orderBy('id', 'asc')
+            ->get();
        
 
         return view('administrator.teacher_edit', [
             'teacher' => $teacher,
             'cities' => $cities,
+            'specialities' => $specialities,
         ]);
     }
 
@@ -143,6 +158,7 @@ class TeacherController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'city_id' => $request->city_id ? $request->city_id : null,
+            'speciality_id' => $request->speciality_id ? $request->speciality_id : null,
         ]);
 
         Session::flash('message', 'Информация об учителе успешно сохранена!');

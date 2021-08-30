@@ -48,7 +48,7 @@
                                                     @endif
                                                 @endforeach
                                             @else
-                                                <option selected>Список учеников пуст</option>
+                                                <option disabled value="0">Список учеников пуст</option>
                                             @endif
                                         </select>
                                         <div class="invalid-feedback">

@@ -63,6 +63,21 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="mb-3 row">
+                                    <label for="inputSpeciality" class="col-lg-2 col-form-label">Специальность</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="speciality_id" id="inputSpeciality" aria-label="Выберите специальность">
+                                            @if($specialities && $specialities->count())
+                                                <option selected value="0">Выберите специальность</option>
+                                                @foreach($specialities as $speciality)
+                                                    <option value="{{ $speciality->id }}">{{ $speciality->title }}</option>
+                                                @endforeach
+                                            @else
+                                                <option selected value="0">Список специальностей пуст</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <button type="submit" class="btn btn-success">Сохранить</button>
@@ -83,6 +98,7 @@
                                     <th scope="col">ФИО</th>
                                     <th scope="col">Почта</th>
                                     <th scope="col">Филиал</th>
+                                    <th scope="col">Специальность</th>
                                     <th scope="col">Опции</th>
                                 </tr>
                             </thead>
@@ -92,7 +108,8 @@
                                         <th>{{ $key+1 }}</th>
                                         <td>{{ $teacher->second_name }} {{ $teacher->first_name }} {{ $teacher->last_name }}</td>
                                         <td>{{ $teacher->email }}</td>
-                                        <td>{{ $teacher->city ? $teacher->city->title : 'Без филиала' }}</td>
+                                        <td>{{ $teacher->city ? $teacher->city->title : '' }}</td>
+                                        <td>{{ $teacher->speciality ? $teacher->speciality->title : '' }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <form action="{{ route('teachers.updateLetter', ['teacher'=> $teacher->id]) }}" method="POST">

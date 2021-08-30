@@ -84,6 +84,8 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
+        $this->authorize('cityProtected', $city);
+
         return view('administrator.city_edit', [
             'city' => $city,
         ]);
@@ -98,6 +100,8 @@ class CityController extends Controller
      */
     public function update(Request $request, City $city)
     {
+        $this->authorize('cityProtected', $city);
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
         ]);
@@ -126,6 +130,7 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
+        $this->authorize('cityProtected', $city);
 
         $users = User::withTrashed()
             ->where("city_id", $city->id)

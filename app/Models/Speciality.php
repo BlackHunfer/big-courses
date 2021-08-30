@@ -28,6 +28,11 @@ class Speciality extends Model
         return $this->hasMany(User::class);
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function groups()
     {
         return $this->hasMany(Group::class);

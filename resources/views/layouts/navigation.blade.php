@@ -19,19 +19,16 @@
                     <x-nav-link :href="route('cities.index')" :active="request()->routeIs('cities.index')">
                         {{ __('Филиалы') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('specialities.index')" :active="request()->routeIs('specialities.index')">
+                        {{ __('Специальности') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('teachers.index')" :active="request()->routeIs('teachers.index')">
                         {{ __('Учителя') }}
                     </x-nav-link>
                     @endrole
                     @role('teacher')
-                    <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
+                    <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index') || request()->routeIs('groups.index')">
                         {{ __('Ученики') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('specialities.index')" :active="request()->routeIs('specialities.index')">
-                        {{ __('Специальности') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('groups.index')" :active="request()->routeIs('groups.index')">
-                        {{ __('Группы учеников') }}
                     </x-nav-link>
                     @endrole
                 </div>

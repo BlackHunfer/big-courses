@@ -72,13 +72,13 @@ class SpecialityController extends Controller
               ->withErrors($validator);
         }
 
-        $teacher = $request->user();
-        $admin_id = $teacher->teacher_admins[0]->id;
+        // $teacher = $request->user();
+        $admin_id = Auth::user()->id;
 
         $specialityNew = $request->user()->specialities()->create([
             'title' => $request->title,
             'admin_id' => $admin_id,
-            'city_id' => Auth::user()->city_id,
+            // 'city_id' => Auth::user()->city_id,
             'created_by' => Auth::user()->id,
         ]);
 
@@ -106,6 +106,8 @@ class SpecialityController extends Controller
      */
     public function edit(Speciality $speciality)
     {
+        $this->authorize('specialityProtected', $speciality);
+
         return view('teacher.speciality_edit', [
             'speciality' => $speciality,
         ]);
@@ -120,6 +122,8 @@ class SpecialityController extends Controller
      */
     public function update(Request $request, Speciality $speciality)
     {
+        $this->authorize('specialityProtected', $speciality);
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
         ]);
@@ -147,8 +151,18 @@ class SpecialityController extends Controller
      */
     public function destroy(Speciality $speciality)
     {
-        $groups = Group::withTrashed()
-            ->where("speciality_id", $speciality->id)
+        $this->authorize('specialityProtected', $speciality);
+
+        $users = User::where("speciality_id", $speciality->id)
+            ->get();
+
+        foreach($users as $user){
+            $user->update([
+                'speciality_id' => null,
+            ]);
+        }
+
+        $groups = Group::where("speciality_id", $speciality->id)
             ->get();
 
         foreach($groups as $group){

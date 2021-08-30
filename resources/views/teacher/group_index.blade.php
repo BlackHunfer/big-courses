@@ -8,6 +8,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{ route('students.index') }}">Ученики</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Группы учеников</a>
+                </li>
+            </ul>
             <div class="p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="col-12">
                     <a class="mb-4 btn btn-primary" data-bs-toggle="collapse" href="#addGroupCollapse" role="button" aria-expanded="false" aria-controls="addGroupCollapse">
@@ -36,7 +44,7 @@
                                                     <option value="{{ $student->id }}">{{ $student->second_name }} {{ $student->first_name }} {{ $student->last_name }}</option>
                                                 @endforeach
                                             @else
-                                                <option selected>Список учеников пуст</option>
+                                                <option disabled value="0">Список учеников пуст</option>
                                             @endif
                                         </select>
                                         <div class="invalid-feedback">
@@ -54,7 +62,7 @@
                                                     <option value="{{ $speciality->id }}">{{ $speciality->title }}</option>
                                                 @endforeach
                                             @else
-                                                <option selected>Список специальностей пуст</option>
+                                                <option selected value="0">Список специальностей пуст</option>
                                             @endif
                                         </select>
                                     </div>
@@ -107,9 +115,9 @@
                                             <table class="table table-bordered table-sm mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">ФИО</th>
-                                                        <th scope="col">Опции</th>
+                                                        <th scope="col" style="width: 5%">#</th>
+                                                        <th scope="col" style="width: 60%">ФИО</th>
+                                                        <th scope="col" style="width: 25%">Опции</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
