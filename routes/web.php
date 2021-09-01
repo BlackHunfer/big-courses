@@ -6,6 +6,10 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\MaterialController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +33,7 @@ Route::group(['middleware' => 'role:administrator'], function() {
     Route::resource('cities', CityController::class)->except([
         'show', 'create'
     ]);
-    
+
     Route::resource('specialities', SpecialityController::class)->except([
         'show', 'create'
     ]);
@@ -47,10 +51,20 @@ Route::group(['middleware' => 'role:teacher'], function() {
     ]);
     Route::post('students/{student}/updateletter', [StudentController::class, 'updateLetter'])->name('students.updateLetter');
 
-    Route::resource('groups', GroupController::class)->except([
+    Route::resource('students/groups', GroupController::class)->except([
         'show', 'create'
     ]);
     Route::post('groups/{group}/{student}/ungroup', [GroupController::class, 'ungroup'])->name('groups.ungroup.student');
+
+    Route::resource('courses', CourseController::class)->except([
+        'show', 'create'
+    ]);
+    Route::resource('materials', MaterialController::class)->except([
+        'show'
+    ]);
+    Route::resource('themes', ThemeController::class)->except([
+        'show', 'create'
+    ]);
 });
 
 

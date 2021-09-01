@@ -17,6 +17,7 @@ use App\Models\City;
 use App\Models\Speciality;
 use App\Models\Group;
 use App\Models\Material;
+use App\Models\Course;
 
 
 
@@ -113,6 +114,11 @@ class User extends Authenticatable
     public function student_admins() 
     {
         return $this->belongsToMany(User::class, 'admin_student','student_id', 'admin_id')->withPivot('admin_id', 'student_id')->withTimestamps();
+    }
+
+    public function admin_courses()
+    {
+        return $this->hasMany(Course::class, 'id', 'admin_id');
     }
 
 

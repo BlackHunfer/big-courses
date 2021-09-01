@@ -52,6 +52,23 @@ $(document).ready(function() {
 
     $("[name=tel_phone]").mask("+7 (999) 999-99-99");
     $("[name=birthday]").mask("99.99.9999");
+
+    $(".btn-create-theme").on("click", function(){
+      var route = $(this).attr("data-route");
+
+      $("#themeModal form").attr("action", route);
+    });
+
+    $(".theme-edit-btn").on("click", function(){
+      var route = $(this).attr("data-route");
+      var title = $(this).attr("data-title");
+
+      // $("#themeEditModal .modal-title").text(title);
+      $("#themeEditModal [name='title']").val(title);
+      $("#themeEditModal form").attr("action", route);
+    });
+
+
  });
 
  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

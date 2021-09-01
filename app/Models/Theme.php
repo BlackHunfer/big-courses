@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Course;
+use App\Models\Theme;
 
 class Theme extends Model
 {
@@ -22,4 +24,19 @@ class Theme extends Model
         'order',
         'created_by',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function themes()
+    {
+        return $this->hasMany(Theme::class);
+    }
+
+    public function childrenThemes()
+    {
+        return $this->hasMany(Theme::class)->with('themes');
+    }
 }
