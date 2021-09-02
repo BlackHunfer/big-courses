@@ -30,7 +30,7 @@
                     <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index') || request()->routeIs('groups.index')">
                         {{ __('Ученики') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('courses.index')" :active="request()->routeIs('courses.index') || request()->routeIs('courses.edit')">
+                    <x-nav-link :href="route('courses.index')" :active="request()->routeIs('courses.index') || request()->routeIs('courses.edit') || request()->routeIs('materials.create') || request()->routeIs('materials.edit')">
                         {{ __('Курсы') }}
                     </x-nav-link>
                     @endrole

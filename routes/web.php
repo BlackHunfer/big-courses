@@ -59,12 +59,15 @@ Route::group(['middleware' => 'role:teacher'], function() {
     Route::resource('courses', CourseController::class)->except([
         'show', 'create'
     ]);
-    Route::resource('materials', MaterialController::class)->except([
-        'show'
+    Route::resource('courses/themes', ThemeController::class)->except([
+        'index', 'show', 'create'
     ]);
-    Route::resource('themes', ThemeController::class)->except([
-        'show', 'create'
+    Route::resource('courses/materials', MaterialController::class)->except([
+        'create', 'index', 'show', 'store'
     ]);
+
+    Route::get('courses/{course}/{theme}/{material_type_id}/materials/create', [MaterialController::class, 'create'])->name('materials.create');
+    Route::post('courses/{course}/{theme}/{material_type_id}/materials/store', [MaterialController::class, 'store'])->name('materials.store');
 });
 
 

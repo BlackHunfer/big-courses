@@ -28,4 +28,6 @@ class Material extends Model
         'order',
         'created_by',
     ];
+
+    
 }
