@@ -98,7 +98,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 ClassicEditor
 				.create( document.querySelector( '.editor-text' ), {
-					
 				toolbar: {
 					items: [
 						'heading',

@@ -33,11 +33,21 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <textarea name="text" name="text" class="editor-text">{{ $material->text }}</textarea>
+                                    <label for="inputTitle" class="col-12 col-form-label">Контент урока*</label>
+                                    <div class="col-12">
+                                        <textarea name="text" name="text" class="editor-text">{{ $material->text }}</textarea>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <button type="submit" class="btn btn-success">Сохранить</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="ck ck-content">
+                                            {!! $material->text !!}
+                                        </div>
                                     </div>
                                 </div>
                             </form>

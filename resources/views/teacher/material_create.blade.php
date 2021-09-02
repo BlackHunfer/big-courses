@@ -32,7 +32,10 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <textarea name="text" name="text" class="editor-text"></textarea>
+                                    <label for="inputTitle" class="col-12 col-form-label">Контент урока</label>
+                                    <div class="col-12">
+                                        <textarea name="text" name="text" class="editor-text"></textarea>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">

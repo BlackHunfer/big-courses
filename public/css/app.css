@@ -43787,6 +43787,18 @@ textarea.form-control-lg{
 
 /* @import '../summernote/summernote-bs4.min.css'; */
 
+.ck-editor{
+  width: 100%;
+}
+
+.ck-editor__editable{
+  min-height: 400px;
+}
+
+.ck-content u{
+  text-decoration: underline !important;
+}
+
 @media (min-width: 640px){
   .sm\:container{
     width: 100%;
@@ -200221,4 +200233,3 @@ textarea.form-control-lg{
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
-
