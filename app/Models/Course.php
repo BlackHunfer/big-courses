@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Course;
 use App\Models\Theme;
+use App\Models\Material;
 
 class Course extends Model
 {
@@ -33,6 +34,11 @@ class Course extends Model
     public function themes()
     {
         return $this->hasMany(Theme::class);
+    }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
     }
 
 }

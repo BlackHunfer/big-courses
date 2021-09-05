@@ -32,9 +32,46 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inputTitle" class="col-12 col-form-label">Контент урока</label>
                                     <div class="col-12">
-                                        <textarea name="text" name="text" class="editor-text"></textarea>
+                                        <label for="inputTitle" class="col-12 col-form-label">Содержание урока</label>
+                                    </div>
+                                    <div class="col-2">
+                                            <div class="list-group list-slides__material" id="list-tabSlides" role="tablist">
+                                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active" data-bs-toggle="list" href="#slide1" role="tab">
+                                                <span class="title-slide__material">Слайд 1</span>
+
+                                                <button class="btn btn-danger btn-sm delete-slide__material" title="Удалить"><i class="bi bi-x-lg"></i></button>
+                                            </a>
+                                        </div>
+                                        <div class="d-grid gap-2 mt-3">
+                                            <button type="button" class="btn btn-outline-primary btn-sm btn-create-slide__material">
+                                                <i class="bi bi-plus-lg mr-1"></i> Новый слайд
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="tab-content content-slides__material">
+                                            <div class="tab-pane fade show active" id="slide1" role="tabpanel"> 
+                                                <div class="col-12">
+                                                    <textarea name="text[]" class="editor-text"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="inputMaterialOpen" class="col-lg-2 col-form-label">Тип доступа</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="material_open_id" id="inputMaterialOpen" aria-label="Выберите тип доступа" required>
+                                                @foreach($opensMaterialIds as $key => $opensMaterialId)
+                                                        <option value="{{ $key }}">{{ $opensMaterialId['title'] }}</option>
+                                                @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Выберите тип доступа
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">

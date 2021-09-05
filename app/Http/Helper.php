@@ -18,10 +18,24 @@ class Helper
     }
 
     protected static $opensMaterialIds = [
-        0 => 'Доступ открыт всегда',
-        1 => 'Доступ открывается в последовательном режиме',
-        2 => 'Доступ открывается по расписанию',
+        0 => [
+            'title' => 'Доступен всегда',
+            'icon' => 'bi-clock',
+        ],
+        1 => [
+            'title' => 'Открывается в последовательном режиме',
+            'icon' => 'bi-list-nested',
+        ],
+        2 => [
+            'title' => 'Открывается по расписанию',
+            'icon' => 'bi-clock-history',
+        ],
     ];
+
+    public static function opensMaterialIds()
+    {
+        return self::$opensMaterialIds;
+    }
     public static function opensMaterialIdToStr($opensId)
     {
         return self::$opensMaterialIds[$opensId] ?? "id: $opensId";

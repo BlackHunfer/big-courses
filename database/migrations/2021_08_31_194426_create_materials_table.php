@@ -19,9 +19,9 @@ class CreateMaterialsTable extends Migration
             $table->foreignId('course_id')->constrained('courses');
             $table->foreignId('created_by')->constrained('users')->nullable();
             $table->foreignId('theme_id')->constrained('themes')->nullable();
-            $table->foreignId('material_type_id')->constrained('material_types');
-            $table->foreignId('material_open_id')->constrained('material_opens');
-            $table->text('text')->nullable();
+            $table->integer('material_type_id')->nullable();
+            $table->integer('material_open_id')->nullable();
+            $table->json('text')->nullable();
             $table->text('upload_file')->nullable(); //файл учителя
             $table->text('video')->nullable();  //видео учителя
             // $table->foreignId('test_id')->constrained('tests')->nullable(); //Прикрепленный тест к материалу

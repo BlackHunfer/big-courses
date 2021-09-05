@@ -31,11 +31,13 @@ class MaterialController extends Controller
     {
 
         $material_type = Helper::typeMaterialIdToStr($material_type_id);
+        $opensMaterialIds = Helper::opensMaterialIds();
 
         return view('teacher.material_create', [
             'course' => $course,
             'theme' => $theme,
             'material_type' => $material_type,
+            'opensMaterialIds' => $opensMaterialIds,
         ]);
     }
 
@@ -47,25 +49,38 @@ class MaterialController extends Controller
      */
     public function store(Request $request, Course $course, Theme $theme, $material_type_id)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'title' => 'required|max:255',
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'material_open_id' => 'required',
+        ]);
 
-        // if ($validator->fails()) {
-        //     return redirect()->route('courses.index')
-        //       ->withInput()
-        //       ->withErrors($validator);
-        // }
+        if ($validator->fails()) {
+            return back()
+              ->withInput()
+              ->withErrors($validator);
+        }
 
         $teacher = $request->user();
 
+        if($request->text){
+            $texts = $request->text;
+            $texts = array_diff($texts, [null]);
+            $texts = array_values($texts);
+
+            if(empty($texts)){
+                $texts = null;
+            }
+        }else{
+            $texts = null;
+        }
+
         $materialNew = Material::create([
             'title' => $request->title,
-            'text' => $request->text,
+            'text' => $texts,
             'course_id' => $course->id,
             'theme_id' => $theme->id,
             'material_type_id' => $material_type_id,
-            'material_open_id' => '2',
+            'material_open_id' => $request->material_open_id,
             'order' => '1',
             'created_by' => $request->user()->id,
         ]);
@@ -94,10 +109,17 @@ class MaterialController extends Controller
      */
     public function edit(Request $request, Material $material)
     {
+        $opensMaterialIds = Helper::opensMaterialIds();
+
+        // dd($material->text);
+        // foreach($material->text as $key => $text){
+        //     dd($key);
+        // }
 
         return view('teacher.material_edit', [
             // 'course' => $course,
             'material' => $material,
+            'opensMaterialIds' => $opensMaterialIds,
             // 'themesChild' => $themesChild,
         ]);
     }
@@ -111,7 +133,40 @@ class MaterialController extends Controller
      */
     public function update(Request $request, Material $material)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'material_open_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+              ->withInput()
+              ->withErrors($validator);
+        }
+
+        $teacher = $request->user();
+
+        if($request->text){
+            $texts = $request->text;
+            $texts = array_diff($texts, [null]);
+            $texts = array_values($texts);
+
+            if(empty($texts)){
+                $texts = null;
+            }
+        }else{
+            $texts = null;
+        }
+
+        $materialNew = Material::find($material->id)->update([
+            'title' => $request->title,
+            'text' => $texts,
+            'material_open_id' => $request->material_open_id,
+        ]);
+
+        Session::flash('message', 'Информация о материале успешно сохранена!');
+
+        return redirect()->route('materials.edit', ['material' => $material->id]);
     }
 
     /**
@@ -122,6 +177,10 @@ class MaterialController extends Controller
      */
     public function destroy(Material $material)
     {
-        //
+        $material->delete();
+
+        Session::flash('message', 'Материал успешно отправлен в архив!');
+
+        return back();
     }
 }

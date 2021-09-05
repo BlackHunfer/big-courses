@@ -72,5 +72,92 @@
             
             <script src="{{ asset('js/app.js') }}" defer></script>
     
+            @if(\Request::route()->getName() == 'materials.create' || \Request::route()->getName() == 'materials.edit')
+            <script>
+            let allEditors = document.querySelectorAll('.editor-text');
+                for (let i = 0; i < allEditors.length; ++i) {
+
+                        ClassicEditor
+                        .create( allEditors[i], {
+                                toolbar: {
+                                items: [
+                                    'heading',
+                                    '|',
+                                    'removeFormat',
+                                    '|',
+                                    'fontColor',
+                                    'fontBackgroundColor',
+                                    '|',
+                                    'fontSize',
+                                    'bold',
+                                    'italic',
+                                    'strikethrough',
+                                    'underline',
+                                    'link',
+                                    '|',
+                                    'bulletedList',
+                                    'numberedList',
+                                    'alignment',
+                                    '|',
+                                    'outdent',
+                                    'indent',
+                                    '|',
+                                    'superscript',
+                                    'subscript',
+                                    'specialCharacters',
+                                    '|',
+                                    // 'imageUpload',
+                                    'imageInsert',
+                                    'blockQuote',
+                                    'insertTable',
+                                    'mediaEmbed',
+                                    'findAndReplace',
+                                    'undo',
+                                    'redo',
+                                    'horizontalLine',
+                                    'code',
+                                    'sourceEditing'
+                                ]
+                            },
+                            language: 'ru',
+                            image: {
+                                toolbar: [
+                                    'imageTextAlternative',
+                                    'imageStyle:inline',
+                                    'imageStyle:block',
+                                    'imageStyle:side'
+                                ]
+                            },
+                            table: {
+                                contentToolbar: [
+                                    'tableColumn',
+                                    'tableRow',
+                                    'mergeTableCells',
+                                    'tableCellProperties',
+                                    'tableProperties'
+                                ]
+                            },
+                            simpleUpload: {
+                                uploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+                            },
+                
+                            licenseKey: '',
+
+                            } );
+                            // .then( editor => {
+                            // 	window.editor = editor;
+                        
+                                
+                            // } )
+                            // .catch( error => {
+                            // 	console.error( 'Oops, something went wrong!' );
+                            // 	console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+                            // 	console.warn( 'Build id: st1iocv1ttuq-kjyx4eesmz9c' );
+                            // 	console.error( error );
+                            // } );
+                };
+                </script>
+
+                @endif
     </body>
 </html>

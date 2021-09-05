@@ -69,7 +69,9 @@ Route::group(['middleware' => 'role:teacher'], function() {
     Route::get('courses/{course}/{theme}/{material_type_id}/materials/create', [MaterialController::class, 'create'])->name('materials.create');
     Route::post('courses/{course}/{theme}/{material_type_id}/materials/store', [MaterialController::class, 'store'])->name('materials.store');
 });
-
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
 //Один роут для нескольких ролей. Но нужно закомментить строки в RoleMiddleware
 // Route::group(['middleware' => 'role:administrator,teacher'], function() {

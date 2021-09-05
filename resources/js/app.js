@@ -72,33 +72,19 @@ $(document).ready(function() {
       $("#themeEditModal form").attr("action", route);
     });
 
+    
+    //Новый слайд у теоритического урока
+    $(".btn-create-slide__material").on("click", function(){
+        var $countSlides = $(".list-slides__material .list-group-item").length;
+        $newSlide = $countSlides + 1;
+        $newSlideEditor = '#slide'+ $newSlide+' .editor-text';
 
- });
-
- var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-
-
-            
-// ClassicEditor
-// .create( document.querySelector( '#editor1' ), {
-//     language: 'ru',
-//     simpleUpload: {
-//       uploadUrl: 'http://big-courses',
-//     }
-// } )
-// .then( editor => {
-//     console.log( editor );
-// } )
-// .catch( error => {
-//     console.error( error );
-// } );
-
-ClassicEditor
-				.create( document.querySelector( '.editor-text' ), {
-				toolbar: {
+        $(".list-slides__material").append('<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-bs-toggle="list" href="#slide'+ $newSlide +'" role="tab"><span class="title-slide__material">Слайд '+ $newSlide +'</span> <button class="btn btn-danger btn-sm delete-slide__material" title="Удалить"><i class="bi bi-x-lg"></i></button></a>');
+        $(".content-slides__material").append('<div class="tab-pane fade" id="slide'+ $newSlide +'" role="tabpanel"><div class="col-12"><textarea name="text[]" class="editor-text"></textarea></div></div>');
+        
+        ClassicEditor
+            .create( document.querySelector($newSlideEditor), {
+                    toolbar: {
 					items: [
 						'heading',
 						'|',
@@ -110,8 +96,8 @@ ClassicEditor
 						'fontSize',
 						'bold',
 						'italic',
-						'underline',
 						'strikethrough',
+						'underline',
 						'link',
 						'|',
 						'bulletedList',
@@ -125,7 +111,8 @@ ClassicEditor
 						'subscript',
 						'specialCharacters',
 						'|',
-						'imageUpload',
+						// 'imageUpload',
+						'imageInsert',
 						'blockQuote',
 						'insertTable',
 						'mediaEmbed',
@@ -146,9 +133,6 @@ ClassicEditor
 						'imageStyle:side'
 					]
 				},
-        simpleUpload: {
-          uploadUrl: 'http://big-courses',
-        },
 				table: {
 					contentToolbar: [
 						'tableColumn',
@@ -158,21 +142,53 @@ ClassicEditor
 						'tableProperties'
 					]
 				},
-					licenseKey: '',
-					
-					
-					
-				} )
-				.then( editor => {
-					window.editor = editor;
-			
-					
-					
-					
-				} )
-				.catch( error => {
-					console.error( 'Oops, something went wrong!' );
-					console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
-					console.warn( 'Build id: st1iocv1ttuq-kjyx4eesmz9c' );
-					console.error( error );
+                simpleUpload: {
+                    uploadUrl: '/laravel-filemanager/upload?type=Images&_token=' + $('meta[name=csrf-token]').attr("content"),
+                },
+	
+				licenseKey: '',
+
 				} );
+			
+
+        $(".list-slides__material .list-group-item").each(function(index){
+          $(this).attr("href", "#slide" + (index + 1));
+          $(this).find(".title-slide__material").text("Слайд " + (index + 1));
+        });
+
+        $(".content-slides__material .tab-pane").each(function(index){
+          $(this).attr("id", "slide" + (index + 1));
+        });
+        
+    });
+
+    $(document).on('click','.delete-slide__material', function(){
+      var $idSlide = $(this).parents('.list-group-item').attr("href");
+
+      $(this).parents('.list-group-item').remove();
+      $(".content-slides__material").find($idSlide).remove();
+
+      $(".list-slides__material .list-group-item").each(function(index){
+        $(this).attr("href", "#slide" + (index + 1));
+        $(this).find(".title-slide__material").text("Слайд " + (index + 1));
+      });
+
+      $(".content-slides__material .tab-pane").each(function(index){
+        $(this).attr("id", "slide" + (index + 1));
+      });
+
+      // var firstTabEl = document.querySelector('#list-tabSlides a[href="#slide1"]')
+      // var firstTab = new bootstrap.Tab(firstTabEl)
+      // firstTab.show()
+
+      // $(".content-slides__material .tab-pane[id='slide1']").show();
+
+    });
+
+ });
+
+ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+  
