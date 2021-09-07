@@ -30,14 +30,17 @@ class StudentCoursesController extends Controller
     public function show(Course $course, Request $request)
     {
 
-        //Обновление видимости материалов в режиме последовательности
+        //Обновление active_opens материалам с последовательным доступом после изучения
         $opensWithMaterialIds = [];
+        $notOpensWithMaterialIds = [];
         foreach($course->materials as $materialCourse){
             if($materialCourse->material_id != null){
                 foreach($materialCourse->for_opens_materials as $for_opens_material){
                     foreach($for_opens_material->results_for_student as $result){
                         if($result->studied == 1){
                             array_push($opensWithMaterialIds, $materialCourse->id);
+                        }else{
+                            array_push($notOpensWithMaterialIds, $materialCourse->id);
                         }
                     }
                 }
@@ -56,6 +59,20 @@ class StudentCoursesController extends Controller
             }
         }
 
+        if(!empty($notOpensWithMaterialIds)){
+
+            $resultWithOpensMaterial = $request->user()->student_results
+                ->whereIn('material_id', $notOpensWithMaterialIds);
+
+            foreach($resultWithOpensMaterial as $resultWithOpen){
+                $resultWithOpenUpdated = $resultWithOpen->update([
+                    'active_opens' => null,
+                ]);
+            }
+        }
+
+        //
+
         $themes = $course->themes()
             ->whereNull('theme_id')
             ->with('childrenThemes')
@@ -71,7 +88,7 @@ class StudentCoursesController extends Controller
     public function startMaterial(Request $request, Course $course, Material $material)
     {
 
-        //Присваивание active_opens материалам с последовательным доступом после изучения
+ 
         $result = $request->user()->student_results->where('material_id', $material->id)->first();
 
         $resultUpdated = $result->update([

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Material;
 use App\Models\Course;
 use App\Models\Theme;
+use App\Models\Result;
 
 class MaterialController extends Controller
 {
@@ -74,6 +75,7 @@ class MaterialController extends Controller
             $texts = null;
         }
 
+
         $materialNew = Material::create([
             'title' => $request->title,
             'text' => $texts,
@@ -84,6 +86,29 @@ class MaterialController extends Controller
             'order' => '1',
             'created_by' => $request->user()->id,
         ]);
+
+        //Создание результатов для студентов, которые уже прикреплены к этому курсу
+        if($course->course_students && $course->course_students->count()){
+            foreach($course->course_students as $student){
+                if($request->material_open_id == '0'){
+                    $active_opens = 1;
+                }else{
+                    $active_opens = null;
+                }
+
+                // dd($active_opens);
+
+                $admin_id = $teacher->teacher_admins[0]->id;
+                $resultNew = Result::create([
+                    'student_id' => $student->id,
+                    'teacher_id' => $request->user()->id,
+                    'material_id' => $materialNew->id,
+                    'admin_id' => $admin_id,
+                    'active_opens' => $active_opens,
+                ]);
+            }
+        };
+        
 
         Session::flash('message', 'Материал успешно создан!');
 
@@ -153,7 +178,16 @@ class MaterialController extends Controller
             $texts = null;
         }
 
-        $materialNew = $material->update([
+        //Обновление opens для существующих материалов
+        if($request->material_open_id == '0'){
+            foreach($material->results as $result){
+                $resultUpdated = $result->update([
+                    'active_opens' => 1,
+                ]);
+            }
+        }
+
+        $materialUpdated = $material->update([
             'title' => $request->title,
             'text' => $texts,
             'material_open_id' => $request->material_open_id,
