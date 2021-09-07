@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Course;
 use App\Models\Theme;
 use App\Models\Material;
+use App\Models\User;
 
 class Course extends Model
 {
@@ -39,6 +40,12 @@ class Course extends Model
     public function materials()
     {
         return $this->hasMany(Material::class);
+    }
+
+
+    public function course_students() 
+    {
+        return $this->belongsToMany(User::class, 'student_course','course_id', 'student_id');
     }
 
 }

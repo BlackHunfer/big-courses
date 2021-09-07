@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use App\Models\Theme;
 use App\Models\Material;
@@ -44,5 +45,14 @@ class Theme extends Model
     public function materials()
     {
         return $this->hasMany(Material::class);
+    }
+
+
+    public function materialsCourseStudent()
+    {
+        return $this->materials()->whereHas('results', function ($query) {
+            $query->where('student_id', Auth::user()->id)
+                ->where('active_opens', '1');
+        });
     }
 }

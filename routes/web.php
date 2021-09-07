@@ -9,6 +9,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\StudentCoursesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::group(['middleware' => 'role:administrator'], function() {
+Route::group(['middleware' => ['auth', 'role:administrator']], function() {
     Route::resource('cities', CityController::class)->except([
         'show', 'create'
     ]);
@@ -45,7 +46,7 @@ Route::group(['middleware' => 'role:administrator'], function() {
     
 });
 
-Route::group(['middleware' => 'role:teacher'], function() {
+Route::group(['middleware' => ['auth', 'role:teacher']], function() {
     Route::resource('students', StudentController::class)->except([
         'show', 'create'
     ]);
@@ -69,7 +70,21 @@ Route::group(['middleware' => 'role:teacher'], function() {
     Route::get('courses/{course}/{theme}/{material_type_id}/materials/create', [MaterialController::class, 'create'])->name('materials.create');
     Route::post('courses/{course}/{theme}/{material_type_id}/materials/store', [MaterialController::class, 'store'])->name('materials.store');
 });
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['auth']], function () {
+
+Route::get('/lk', function () {
+    return view('auth.login');
+});
+
+Route::group(['prefix' => 'lk', 'middleware' => ['auth', 'role:student']], function() {
+    Route::get('courses', [StudentCoursesController::class, 'index'])->name('student.courses.index');
+    Route::get('courses/{course}', [StudentCoursesController::class, 'show'])->name('student.courses.show');
+
+    Route::post('courses/{course}/material/{material}', [StudentCoursesController::class, 'startMaterial'])->name('student.materials.start');
+    Route::get('courses/{course}/material/{material}', [StudentCoursesController::class, 'showMaterial'])->name('student.materials.show');
+});
+
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['auth', 'role:teacher']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 

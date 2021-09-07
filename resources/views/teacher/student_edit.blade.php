@@ -88,6 +88,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="mb-3 row">
+                                    <label for="inputCity" class="col-lg-2 col-form-label">Прикрепить курс</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="course" id="inputCity" aria-label="Выберите филиал">
+                                            @if($courses && $courses->count())
+                                                @foreach($courses as $course)
+                                                    <option value="{{ $course->id }}">{{ $course->title }}</option>
+                                                @endforeach
+                                            @else
+                                                <option selected>Список курсов пуст</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <button type="submit" class="btn btn-success">Сохранить</button>

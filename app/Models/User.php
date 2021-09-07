@@ -18,6 +18,7 @@ use App\Models\Speciality;
 use App\Models\Group;
 use App\Models\Material;
 use App\Models\Course;
+use App\Models\Result;
 
 
 
@@ -93,10 +94,6 @@ class User extends Authenticatable
         return $this->belongsTo(Group::class, 'id', 'admin_id');
     }
     
-    public function materials()
-    {
-        return $this->belongsToMany(Material::class)->withPivot('date_start', 'date_end', 'upload_file', 'result', 'grade')->withTimestamps();
-    }
 
     public function admin_teachers() 
     {
@@ -119,6 +116,26 @@ class User extends Authenticatable
     public function admin_courses()
     {
         return $this->hasMany(Course::class, 'id', 'admin_id');
+    }
+
+    public function admin_results()
+    {
+        return $this->hasMany(Result::class, 'admin_id');
+    }
+
+    public function teacher_results()
+    {
+        return $this->hasMany(Result::class, 'teacher_id');
+    }
+
+    public function student_results()
+    {
+        return $this->hasMany(Result::class, 'student_id');
+    }
+
+    public function student_courses() 
+    {
+        return $this->belongsToMany(Course::class, 'student_course','student_id', 'course_id');
     }
 
 

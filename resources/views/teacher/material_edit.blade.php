@@ -95,6 +95,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-3 row">
+                                    <label for="inputMaterialId" class="col-lg-2 col-form-label">Открывается после</label>
+                                    <div class="col-lg-4">
+                                        <select class="form-select" name="material_id" id="inputMaterialId" aria-label="Выберите материал">
+                                            <option value="0" >Выберите материал</option>
+                                                @foreach($course->materials as $materialCourse)
+                                                    @if($material->id != $materialCourse->id)
+                                                        <option value="{{ $materialCourse->id }}" @if($material->material_id == $materialCourse->id) selected @endif>{{ $materialCourse->title }}</option>
+                                                    @endif
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col">
                                         <button type="submit" class="btn btn-success">Сохранить</button>

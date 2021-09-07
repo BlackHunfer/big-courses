@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Theme;
 use App\Models\Course;
+use App\Models\Result;
 
 class Material extends Model
 {
@@ -45,4 +47,29 @@ class Material extends Model
     {
         return $this->belongsTo(Theme::class);
     }
+
+    public function results() 
+    {
+        return $this->hasMany(Result::class);
+    }
+
+    public function results_for_student() 
+    {
+        return $this->results()->where("student_id", Auth::user()->id);
+    }
+
+    public function for_opens_materials() 
+    {
+        return $this->hasMany(Material::class, 'id', 'material_id');
+    }
+
+    public function for_opens_material()
+    {
+        return $this->belongsTo(Material::class);
+    }
+
+    // public function results_for_student_studied() 
+    // {
+    //     return $this->results()->where("student_id", Auth::user()->id)->where('studied', 1);
+    // }
 }

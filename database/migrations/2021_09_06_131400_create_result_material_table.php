@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMaterialTypesTable extends Migration
+class CreateResultMaterialTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateMaterialTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('material_types', function (Blueprint $table) {
+        Schema::create('result_material', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->timestamps();
+            $table->foreignId('material_id')->constrained('materials');
+            $table->foreignId('result_id')->constrained('results');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateMaterialTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('material_types');
+        Schema::dropIfExists('result_material');
     }
 }

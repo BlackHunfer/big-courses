@@ -110,17 +110,12 @@ class MaterialController extends Controller
     public function edit(Request $request, Material $material)
     {
         $opensMaterialIds = Helper::opensMaterialIds();
-
-        // dd($material->text);
-        // foreach($material->text as $key => $text){
-        //     dd($key);
-        // }
+        $course = $material->course;
 
         return view('teacher.material_edit', [
-            // 'course' => $course,
             'material' => $material,
             'opensMaterialIds' => $opensMaterialIds,
-            // 'themesChild' => $themesChild,
+            'course' => $course,
         ]);
     }
 
@@ -158,10 +153,11 @@ class MaterialController extends Controller
             $texts = null;
         }
 
-        $materialNew = Material::find($material->id)->update([
+        $materialNew = $material->update([
             'title' => $request->title,
             'text' => $texts,
             'material_open_id' => $request->material_open_id,
+            'material_id' => $request->material_id ? $request->material_id : null,
         ]);
 
         Session::flash('message', 'Информация о материале успешно сохранена!');

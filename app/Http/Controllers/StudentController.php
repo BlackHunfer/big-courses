@@ -14,6 +14,8 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\City;
+use App\Models\Course;
+use App\Models\Result;
 
 class StudentController extends Controller
 {
@@ -143,9 +145,28 @@ class StudentController extends Controller
         
         $cities = $admin->cities;
 
+        if(isset($teacher->speciality_id)){
+            $courses = Course::where("speciality_id", $teacher->speciality_id)
+                ->orderBy('id', 'asc')
+                ->get();
+        }else{
+            if($request->user()->hasRole('teacher')){
+                $admin_id = $teacher->teacher_admins[0]->id;
+                $admin = User::find($admin_id);
+            }
+            if($request->user()->hasRole('administrator')){
+                $admin = Auth::user();
+            }
+            $courses = $admin->admin_courses()
+                ->where("speciality_id", null)
+                ->orderBy('id', 'asc')
+                ->get();
+        }
+
         return view('teacher.student_edit', [
             'student' => $student,
             'cities' => $cities,
+            'courses' => $courses,
         ]);
     }
 
@@ -180,6 +201,42 @@ class StudentController extends Controller
             'birthday' => Carbon::parse($request->birthday),
             'city_id' => $request->city_id ? $request->city_id : null,
         ]);
+
+        //Прикрепление курса
+
+        if($request->course){
+
+            $teacher = $request->user();
+            $admin_id = $teacher->teacher_admins[0]->id;
+
+            
+
+            $course = Course::find($request->course);
+            $thisCourseStudent = $student->student_courses->where('id', $course->id);
+            if($thisCourseStudent && $thisCourseStudent->count()){
+
+            }else{
+                $student->student_courses()->attach($course->id);
+
+                foreach($course->materials as $material){
+                    if($material->material_open_id === 0){
+                        $active_opens = 1;
+                    }else{
+                        $active_opens = null;
+                    }
+    
+                    $resultNew = Result::create([
+                        'student_id' => $student->id,
+                        'teacher_id' => Auth::user()->id,
+                        'material_id' => $material->id,
+                        'admin_id' => $admin_id,
+                        'active_opens' => $active_opens,
+                    ]);
+                    
+                }
+            }
+
+        }
 
         Session::flash('message', 'Информация об ученике успешно сохранена!');
 
