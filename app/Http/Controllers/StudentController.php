@@ -209,8 +209,6 @@ class StudentController extends Controller
             $teacher = $request->user();
             $admin_id = $teacher->teacher_admins[0]->id;
 
-            
-
             $course = Course::find($request->course);
             $thisCourseStudent = $student->student_courses->where('id', $course->id);
             if($thisCourseStudent && $thisCourseStudent->count()){
@@ -224,13 +222,21 @@ class StudentController extends Controller
                     }else{
                         $active_opens = null;
                     }
-    
+
+                    //Если доступ по расписанию
+                    if($material->date_open_days || $material->date_open_hours || $material->date_open_minutes){
+                        $opened_at = now()->addDays($material->date_open_days ? $material->date_open_days : 0)->addHours($material->date_open_hours ? $material->date_open_hours : 0)->addMinutes($material->date_open_minutes ? $material->date_open_minutes : 0);
+                    }else{
+                        $opened_at = null;
+                    }
+
                     $resultNew = Result::create([
                         'student_id' => $student->id,
                         'teacher_id' => Auth::user()->id,
                         'material_id' => $material->id,
                         'admin_id' => $admin_id,
                         'active_opens' => $active_opens,
+                        'opened_at' => $opened_at,
                     ]);
                     
                 }

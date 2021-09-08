@@ -33,10 +33,14 @@ class StudentCoursesController extends Controller
         //Обновление active_opens материалам с последовательным доступом после изучения
         $opensWithMaterialIds = [];
         $notOpensWithMaterialIds = [];
-        foreach($course->materials as $materialCourse){
+
+        $materialsCourse = $course->materials;
+        foreach($materialsCourse as $materialCourse){
             if($materialCourse->material_id != null){
-                foreach($materialCourse->for_opens_materials as $for_opens_material){
-                    foreach($for_opens_material->results_for_student as $result){
+                $for_opens_materials = $materialCourse->for_opens_materials;
+                foreach($for_opens_materials as $for_opens_material){
+                    $resultsStudent = $for_opens_material->results_for_student;
+                    foreach($resultsStudent as $result){
                         if($result->studied == 1){
                             array_push($opensWithMaterialIds, $materialCourse->id);
                         }else{
@@ -45,13 +49,25 @@ class StudentCoursesController extends Controller
                     }
                 }
             }
+            $resultsStudent = $materialCourse->results_for_student;
+            foreach($resultsStudent as $result){
+                if($result->opened_at && now() > $result->opened_at){
+                    array_push($opensWithMaterialIds, $materialCourse->id);
+                }else if($result->opened_at && now() < $result->opened_at){
+                    array_push($notOpensWithMaterialIds, $materialCourse->id);
+                }
+            }
+
         }
+
+       
         
         if(!empty($opensWithMaterialIds)){
-
+            
             $resultWithOpensMaterial = $request->user()->student_results
-                ->whereIn('material_id', $opensWithMaterialIds);  
-
+                ->whereIn('material_id', $opensWithMaterialIds)
+                ->where('active_opens', '!=', 1);  
+            
             foreach($resultWithOpensMaterial as $resultWithOpen){
                 $resultWithOpenUpdated = $resultWithOpen->update([
                     'active_opens' => 1,
@@ -62,7 +78,8 @@ class StudentCoursesController extends Controller
         if(!empty($notOpensWithMaterialIds)){
 
             $resultWithOpensMaterial = $request->user()->student_results
-                ->whereIn('material_id', $notOpensWithMaterialIds);
+                ->whereIn('material_id', $notOpensWithMaterialIds)
+                ->where('active_opens', 1);
 
             foreach($resultWithOpensMaterial as $resultWithOpen){
                 $resultWithOpenUpdated = $resultWithOpen->update([

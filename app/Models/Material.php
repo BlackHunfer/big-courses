@@ -32,6 +32,9 @@ class Material extends Model
         'opens_after_day',
         'order',
         'created_by',
+        'date_open_days',
+        'date_open_hours',
+        'date_open_minutes',
     ];
 
     protected $casts = [

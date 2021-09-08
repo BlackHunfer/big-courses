@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="inputMaterialId" class="col-lg-2 col-form-label">Открывается после</label>
+                                    <label for="inputMaterialId" class="col-lg-2 col-form-label">Откроется после</label>
                                     <div class="col-lg-4">
                                         <select class="form-select" name="material_id" id="inputMaterialId" aria-label="Выберите материал">
                                             <option value="0" >Выберите материал</option>
@@ -106,6 +106,27 @@
                                                     @endif
                                                 @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-lg-2 col-form-label">Откроется через</label>
+                                    <div class="col-lg-2">
+                                        <div class="input-group">
+                                            <input type="text" name="date_open_days" value="{{ $materialCourse->date_open_days }}" class="form-control" placeholder="0">
+                                            <span class="input-group-text">дней</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="input-group">
+                                            <input type="text" name="date_open_hours" value="{{ $materialCourse->date_open_hours }}" class="form-control" placeholder="0">
+                                            <span class="input-group-text">часов</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="input-group">
+                                            <input type="text" name="date_open_minutes" value="{{ $materialCourse->date_open_minutes }}" class="form-control" placeholder="0">
+                                            <span class="input-group-text">минут</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">

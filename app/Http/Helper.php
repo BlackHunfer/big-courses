@@ -30,6 +30,10 @@ class Helper
             'title' => 'Открывается по расписанию',
             'icon' => 'bi-clock-history',
         ],
+        3 => [
+            'title' => 'Открывается в последовательном режиме по расписанию',
+            'icon' => 'bi-clock-history',
+        ],
     ];
 
     public static function opensMaterialIds()

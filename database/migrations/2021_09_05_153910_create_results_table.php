@@ -24,6 +24,7 @@ class CreateResultsTable extends Migration
             $table->integer('grade')->nullable();
             $table->boolean('active_opens')->nullable();
             $table->datetime('deleted_at')->nullable();
+            $table->timestamp('opened_at', $precision = 0)->nullable();
             $table->timestamps();
         });
     }

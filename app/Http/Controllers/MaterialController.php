@@ -192,6 +192,9 @@ class MaterialController extends Controller
             'text' => $texts,
             'material_open_id' => $request->material_open_id,
             'material_id' => $request->material_id ? $request->material_id : null,
+            'date_open_days' => $request->date_open_days ? $request->date_open_days : null,
+            'date_open_hours' => $request->date_open_hours ? $request->date_open_hours : null,
+            'date_open_minutes' => $request->date_open_minutes ? $request->date_open_minutes : null,
         ]);
 
         Session::flash('message', 'Информация о материале успешно сохранена!');

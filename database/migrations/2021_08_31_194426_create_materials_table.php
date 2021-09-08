@@ -26,7 +26,9 @@ class CreateMaterialsTable extends Migration
             $table->text('video')->nullable();  //видео учителя
             // $table->foreignId('test_id')->constrained('tests')->nullable(); //Прикрепленный тест к материалу
             $table->foreignId('material_id')->constrained('materials')->nullable(); //Открывается только после прохождения выбранного материала или прошлого материала
-            $table->integer('opens_after_day')->nullable(); // Материал откроется после выбранного количества дней с момента регистрации
+            $table->integer('date_open_days')->nullable();
+            $table->integer('date_open_hours')->nullable();
+            $table->integer('date_open_minutes')->nullable(); // Материал откроется после выбранного количества дней с момента регистрации
             // $table->date('open_from')->nullable(); //Тест открывается такого то числа
             // $table->date('open_to')->nullable(); //Тест закрывается такого то числа
             // $table->time('time_for_test')->nullable();

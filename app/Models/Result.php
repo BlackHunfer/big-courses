@@ -26,6 +26,7 @@ class Result extends Model
         'result',
         'grade',
         'active_opens',
+        'opened_at',
     ];
 
     public function material() 
