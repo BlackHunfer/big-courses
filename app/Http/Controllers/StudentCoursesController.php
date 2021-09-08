@@ -34,13 +34,10 @@ class StudentCoursesController extends Controller
         $opensWithMaterialIds = [];
         $notOpensWithMaterialIds = [];
 
-        $materialsCourse = $course->materials;
-        foreach($materialsCourse as $materialCourse){
+        foreach($course->materials as $materialCourse){
             if($materialCourse->material_id != null){
-                $for_opens_materials = $materialCourse->for_opens_materials;
-                foreach($for_opens_materials as $for_opens_material){
-                    $resultsStudent = $for_opens_material->results_for_student;
-                    foreach($resultsStudent as $result){
+                foreach($materialCourse->for_opens_materials as $for_opens_material){
+                    foreach($for_opens_material->results_for_student as $result){
                         if($result->studied == 1){
                             array_push($opensWithMaterialIds, $materialCourse->id);
                         }else{
@@ -49,8 +46,8 @@ class StudentCoursesController extends Controller
                     }
                 }
             }
-            $resultsStudent = $materialCourse->results_for_student;
-            foreach($resultsStudent as $result){
+            //Обновление active_opens материалам с доступом по расписанию
+            foreach($materialCourse->results_for_student as $result){
                 if($result->opened_at && now() > $result->opened_at){
                     array_push($opensWithMaterialIds, $materialCourse->id);
                 }else if($result->opened_at && now() < $result->opened_at){
