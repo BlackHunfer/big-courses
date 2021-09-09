@@ -2150,7 +2150,8 @@ $(document).ready(function () {
     ClassicEditor.create(document.querySelector($newSlideEditor), {
       toolbar: {
         items: ['heading', '|', 'removeFormat', '|', 'fontColor', 'fontBackgroundColor', '|', 'fontSize', 'bold', 'italic', 'strikethrough', 'underline', 'link', '|', 'bulletedList', 'numberedList', 'alignment', '|', 'outdent', 'indent', '|', 'superscript', 'subscript', 'specialCharacters', '|', // 'imageUpload',
-        'imageInsert', 'blockQuote', 'insertTable', 'mediaEmbed', 'findAndReplace', 'undo', 'redo', 'horizontalLine', 'code', 'sourceEditing']
+        'imageInsert', 'blockQuote', 'insertTable', // 'mediaEmbed',
+        'findAndReplace', 'undo', 'redo', 'horizontalLine', 'code', 'sourceEditing']
       },
       language: 'ru',
       image: {

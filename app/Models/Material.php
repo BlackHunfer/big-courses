@@ -35,10 +35,12 @@ class Material extends Model
         'date_open_days',
         'date_open_hours',
         'date_open_minutes',
+        'date_closing_access',
     ];
 
     protected $casts = [
         'text' => 'array',
+        'date_closing_access' => 'array',
     ];
 
     public function course()

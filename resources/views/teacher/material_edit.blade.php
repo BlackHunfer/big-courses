@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3 row d-flex flex-wrap align-items-center opentype__inputs opentype_1 hidden">
+                                <div class="mb-3 row align-items-center opentype__inputs opentype_1 hidden">
                                     <label for="inputMaterialId" class="col-lg-2 col-form-label">Откроется после изучения</label>
                                     <div class="col-lg-4">
                                         <select class="form-select" name="material_id" id="inputMaterialId" aria-label="Выберите материал">
@@ -112,19 +112,19 @@
                                     <label class="col-lg-2 col-form-label">Откроется через</label>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="number" name="date_open_days" value="{{ $material->date_open_days }}" class="form-control" placeholder="0">
+                                            <input type="number" min="0" name="date_open_days" value="{{ $material->date_open_days }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">дней</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="number" name="date_open_hours" value="{{ $material->date_open_hours }}" class="form-control" placeholder="0">
+                                            <input type="number" min="0" name="date_open_hours" value="{{ $material->date_open_hours }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">часов</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="number" name="date_open_minutes" value="{{ $material->date_open_minutes }}" class="form-control" placeholder="0">
+                                            <input type="number" min="0" name="date_open_minutes" value="{{ $material->date_open_minutes }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">минут</span>
                                         </div>
                                     </div>
@@ -157,23 +157,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3 row d-flex flex-wrap align-items-center">
+                                <div class="mb-3 row align-items-center">
                                     <label class="col-lg-2 col-form-label">Доступ <br>закроется через</label>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="number" name="date_close_days" value="" class="form-control" placeholder="0">
+                                            <input type="number" min="0" name="date_close_days" value="{{ $material->date_closing_access ? $material->date_closing_access[0]['days'] : '' }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">дней</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="number" name="date_close_hours" value="" class="form-control" placeholder="0">
+                                            <input type="number" min="0" name="date_close_hours" value="{{ $material->date_closing_access ? $material->date_closing_access[1]['hours'] : '' }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">часов</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="number" name="date_close_minutes" value="" class="form-control" placeholder="0">
+                                            <input type="number" min="0" name="date_close_minutes" value="{{ $material->date_closing_access ? $material->date_closing_access[2]['minutes'] : '' }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">минут</span>
                                         </div>
                                     </div>

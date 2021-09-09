@@ -53,6 +53,10 @@ class StudentCoursesController extends Controller
                 }else if($result->opened_at && now() < $result->opened_at){
                     array_push($notOpensWithMaterialIds, $materialCourse->id);
                 }
+
+                if($result->closed_at && now() > $result->closed_at){
+                    array_push($notOpensWithMaterialIds, $materialCourse->id);
+                }
             }
 
         }

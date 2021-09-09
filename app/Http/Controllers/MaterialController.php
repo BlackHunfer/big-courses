@@ -179,7 +179,24 @@ class MaterialController extends Controller
             $texts = null;
         }
 
-        //Обновление opens и даты открытия для существующих результатов этого материала
+        $date_closing_access = null;
+        if($request->date_close_days || $request->date_close_days === '0' || $request->date_close_hours || $request->date_close_hours === '0' || $request->date_close_minutes || $request->date_close_minutes === '0'){
+            $date_closing_access = [
+                [
+                    'days' => $request->date_close_days
+                ], 
+                [
+                    'hours' => $request->date_close_hours
+                ], 
+                [
+                    'minutes' => $request->date_close_minutes
+                ]
+            ];
+        }
+
+        // dd($date_closing_access);
+
+        //Обновление opens, даты открытия и закрытия для существующих результатов этого материала
         if($request->material_open_id == '0' || $request->date_open_days != $material->date_open_days || $request->date_open_hours != $material->date_open_hours || $request->date_open_minutes != $material->date_open_minutes || Carbon::parse($request->opens_after_day) != Carbon::parse($material->opens_after_day)){
             foreach($material->results as $result){
                 //Если доступен всегда
@@ -191,9 +208,11 @@ class MaterialController extends Controller
                 }
 
                 if($request->material_open_id == '1' && $request->material_open_id != $material->material_open_id && $result->opened_at != null){
-                    $resultUpdated = $result->update([
-                        'opened_at' => null,
-                    ]);
+                    if($result != null){
+                        $resultUpdated = $result->update([
+                            'opened_at' => null,
+                        ]);
+                    }
                 }
 
                 //Откроется через
@@ -202,7 +221,15 @@ class MaterialController extends Controller
                     $resultUpdated = $result->update([
                         'opened_at' => $opened_at,
                     ]);
-                   
+                }
+
+                //Если открытие через полностью пустое
+                if($request->date_open_days === null && $request->date_open_hours === null && $request->date_open_minutes === null){
+                    if($result != null){
+                        $resultUpdated = $result->update([
+                            'opened_at' => null,
+                        ]);
+                    }
                 }
 
                 //откроется в выбранную дату
@@ -211,6 +238,26 @@ class MaterialController extends Controller
                     $resultUpdated = $result->update([
                         'opened_at' => $opened_at,
                     ]);
+                }
+
+                //закроется через
+                $days = $material->date_closing_access ? $material->date_closing_access[0]['days'] : null;
+                $hours = $material->date_closing_access ? $material->date_closing_access[1]['hours'] : null;
+                $minutes = $material->date_closing_access ? $material->date_closing_access[2]['minutes'] : null;
+                if($request->date_close_days && $request->date_close_days != $days || $request->date_close_days === '0' || $request->date_close_hours && $request->date_close_hours != $hours || $request->date_close_hours === '0' || $request->date_close_minutes && $request->date_close_minutes != $minutes || $request->date_close_minutes === '0'){
+                    $closed_at = Carbon::parse($result->created_at)->addDays($request->date_close_days ? $request->date_close_days : 0)->addHours($request->date_close_hours ? $request->date_close_hours : 0)->addMinutes($request->date_close_minutes ? $request->date_close_minutes : 0);
+                    $resultUpdated = $result->update([
+                        'closed_at' => $closed_at,
+                    ]);
+                }
+
+                //Если закрытие полностью пустое
+                if($request->date_close_days === null && $request->date_close_hours === null && $request->date_close_minutes === null){
+                    if($result->closed_at != null){
+                        $resultUpdated = $result->update([
+                            'closed_at' => null,
+                        ]);
+                    }
                 }
             }
         }
@@ -225,6 +272,7 @@ class MaterialController extends Controller
             'date_open_hours' => $request->date_open_hours ? $request->date_open_hours : null,
             'date_open_minutes' => $request->date_open_minutes ? $request->date_open_minutes : null,
             'opens_after_day' => $request->opens_after_day ? Carbon::parse($request->opens_after_day) : null,
+            'date_closing_access' => $date_closing_access ? $date_closing_access : null,
         ]);
 
         Session::flash('message', 'Информация о материале успешно сохранена!');

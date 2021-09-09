@@ -30,10 +30,7 @@ class CreateMaterialsTable extends Migration
             $table->integer('date_open_days')->nullable();
             $table->integer('date_open_hours')->nullable();
             $table->integer('date_open_minutes')->nullable(); // Материал откроется после выбранного количества дней с момента регистрации
-            // $table->date('open_from')->nullable(); //Тест открывается такого то числа
-            // $table->date('open_to')->nullable(); //Тест закрывается такого то числа
-            // $table->time('time_for_test')->nullable();
-            // $table->boolean('education')->nullable();
+            $table->json('date_closing_access')->nullable();
             $table->integer('order');
             $table->timestamps();
             $table->softDeletes();

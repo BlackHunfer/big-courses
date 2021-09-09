@@ -25,6 +25,7 @@ class CreateResultsTable extends Migration
             $table->boolean('active_opens')->nullable();
             $table->datetime('deleted_at')->nullable();
             $table->timestamp('opened_at', $precision = 0)->nullable();
+            $table->timestamp('closed_at', $precision = 0)->nullable();
             $table->timestamps();
         });
     }

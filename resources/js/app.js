@@ -235,7 +235,7 @@ $(document).ready(function() {
 						'imageInsert',
 						'blockQuote',
 						'insertTable',
-						'mediaEmbed',
+						// 'mediaEmbed',
 						'findAndReplace',
 						'undo',
 						'redo',

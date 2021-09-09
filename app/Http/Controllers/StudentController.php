@@ -234,6 +234,12 @@ class StudentController extends Controller
                         $opened_at = Carbon::parse($material->opens_after_day);
                     }
 
+                    if($material->date_closing_access){
+                        $closed_at = now()->addDays($material->date_closing_access[0]['days'] ? $material->date_closing_access[0]['days'] : 0)->addHours($material->date_closing_access[1]['hours'] ? $material->date_closing_access[1]['hours'] : 0)->addMinutes($material->date_closing_access[2]['minutes'] ? $material->date_closing_access[2]['minutes'] : 0);
+                    }else{
+                        $closed_at = null;
+                    }
+
                     $resultNew = Result::create([
                         'student_id' => $student->id,
                         'teacher_id' => Auth::user()->id,
@@ -241,6 +247,7 @@ class StudentController extends Controller
                         'admin_id' => $admin_id,
                         'active_opens' => $active_opens,
                         'opened_at' => $opened_at,
+                        'closed_at' => $closed_at,
                     ]);
                     
                 }
