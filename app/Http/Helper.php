@@ -6,11 +6,26 @@ class Helper
 {
 
     protected static $typeMaterialIds = [
-        0 => 'Теоритический урок',
-        1 => 'Видео',
-        2 => 'Файл',
-        3 => 'Тест',
-        4 => 'Задание с ручной проверкой',
+        0 => [
+            'title' => 'Теоритический урок',
+            'color' => 'bg-primary'
+        ],
+        1 => [
+            'title' => 'Видео',
+            'color' => 'bg-success'
+        ],
+        2 => [
+            'title' => 'Файл',
+            'color' => 'bg-warning text-dark'
+        ],
+        3 => [
+            'title' => 'Тест',
+            'color' => 'bg-info text-dark'
+        ],
+        4 => [
+            'title' => 'Задание с ручной проверкой',
+            'color' => 'bg-secondary'
+        ],
     ];
     public static function typeMaterialIdToStr($typeId)
     {
@@ -19,8 +34,8 @@ class Helper
 
     protected static $opensMaterialIds = [
         0 => [
-            'title' => 'Доступен всегда',
-            'icon' => 'bi-clock',
+            'title' => 'Доступен изначально',
+            'icon' => 'bi-calendar-check',
         ],
         1 => [
             'title' => 'Открывается в последовательном режиме',
@@ -28,11 +43,11 @@ class Helper
         ],
         2 => [
             'title' => 'Открывается по расписанию',
-            'icon' => 'bi-clock-history',
+            'icon' => 'bi-calendar-event',
         ],
         3 => [
             'title' => 'Открывается в последовательном режиме по расписанию',
-            'icon' => 'bi-clock-history',
+            'icon' => 'bi-calendar-week',
         ],
     ];
 

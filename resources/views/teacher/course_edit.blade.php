@@ -40,8 +40,8 @@
                                     <div class="card mb-2">
                                         <div class="card-body py-2 d-flex justify-between align-items-center">
                                             <div class="material_with_text d-flex flex-wrap align-items-center">
-                                                <span class="mr-2 badge bg-secondary">
-                                                    {{ \App\Http\Helper::typeMaterialIdToStr($material->material_type_id) }}
+                                                <span class="mr-2 badge {{ \App\Http\Helper::typeMaterialIdToStr($material->material_type_id)['color'] }}">
+                                                    {{ \App\Http\Helper::typeMaterialIdToStr($material->material_type_id)['title'] }}
                                                 </span>
                                                 <i class="bi {{ \App\Http\Helper::opensMaterialIdToStr($material->material_open_id)['icon'] }} mr-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ \App\Http\Helper::opensMaterialIdToStr($material->material_open_id)['title'] }}" style="padding-top: 3px; font-size: 1.2rem;"></i>
                                                 <p class="card-text mb-0">{{ $material->title }}</p>
@@ -186,8 +186,8 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="formGroupTitleInput" class="form-label">Название*</label>
-                            <input type="text" name="title" class="form-control" id="formGroupTitleInput" placeholder="" required>
+                            <label for="formGroupTitleInput2" class="form-label">Название*</label>
+                            <input type="text" name="title" class="form-control" id="formGroupTitleInput2" placeholder="" required>
                             <div class="invalid-feedback">
                                 Укажите название
                             </div>

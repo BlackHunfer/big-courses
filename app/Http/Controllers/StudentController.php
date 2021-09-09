@@ -230,6 +230,10 @@ class StudentController extends Controller
                         $opened_at = null;
                     }
 
+                    if($material->opens_after_day){
+                        $opened_at = Carbon::parse($material->opens_after_day);
+                    }
+
                     $resultNew = Result::create([
                         'student_id' => $student->id,
                         'teacher_id' => Auth::user()->id,

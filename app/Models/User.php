@@ -115,7 +115,7 @@ class User extends Authenticatable
 
     public function admin_courses()
     {
-        return $this->hasMany(Course::class, 'id', 'admin_id');
+        return $this->hasMany(Course::class, 'admin_id', 'id');
     }
 
     public function admin_results()

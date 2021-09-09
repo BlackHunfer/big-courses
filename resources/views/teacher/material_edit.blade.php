@@ -85,7 +85,7 @@
                                 <div class="mb-3 row">
                                     <label for="inputMaterialOpen" class="col-lg-2 col-form-label">Тип доступа</label>
                                     <div class="col-lg-4">
-                                        <select class="form-select" name="material_open_id" id="inputMaterialOpen" aria-label="Выберите тип доступа" required>
+                                        <select class="form-select select-material_open_id" name="material_open_id" id="inputMaterialOpen" aria-label="Выберите тип доступа" required>
                                                 @foreach($opensMaterialIds as $key => $opensMaterialId)
                                                     <option value="{{ $key }}" @if($material->material_open_id == $key) selected @endif>{{ $opensMaterialId['title'] }}</option>
                                                 @endforeach
@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3 row">
+                                <div class="mb-3 row opentype__inputs opentype_1 hidden">
                                     <label for="inputMaterialId" class="col-lg-2 col-form-label">Откроется после</label>
                                     <div class="col-lg-4">
                                         <select class="form-select" name="material_id" id="inputMaterialId" aria-label="Выберите материал">
@@ -108,24 +108,43 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="mb-3 row">
+                                <div class="mb-3 row opentype__inputs opentype_3 hidden">
                                     <label class="col-lg-2 col-form-label">Откроется через</label>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="text" name="date_open_days" value="{{ $materialCourse->date_open_days }}" class="form-control" placeholder="0">
+                                            <input type="text" name="date_open_days" value="{{ $material->date_open_days }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">дней</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="text" name="date_open_hours" value="{{ $materialCourse->date_open_hours }}" class="form-control" placeholder="0">
+                                            <input type="text" name="date_open_hours" value="{{ $material->date_open_hours }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">часов</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="input-group">
-                                            <input type="text" name="date_open_minutes" value="{{ $materialCourse->date_open_minutes }}" class="form-control" placeholder="0">
+                                            <input type="text" name="date_open_minutes" value="{{ $material->date_open_minutes }}" class="form-control" placeholder="0">
                                             <span class="input-group-text">минут</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 d-flex align-items-center">
+                                        <p class="mb-0 small">с момента привязки курса к студенту</p>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row opentype__inputs opentype_3 hidden">
+                                    <label class="col-lg-2 col-form-label">или</label>
+                                </div>
+                                <div class="mb-3 row opentype__inputs opentype_3 hidden">
+                                    <label class="col-lg-2 col-form-label">Откроется</label>
+                                    <div class="col-lg-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                                            <input type="text" value="{{ \Carbon\Carbon::parse($material->opens_after_day)->format('d.m.Y - H:i') }}" class="form-control form_datetime">
+                                            <button class="btn btn-outline-secondary reset-date" type="button" id="button-addon2" data-bs-toggle="tooltip" data-bs-placement="top" title="Очистить поле"><i class="bi bi-x-lg"></i></button>
+                                            <!-- <span class="input-group-text"></span> -->
+                                            <!-- Если основной пустой, то скрытый тоже должен быть пустым -->
+                                            <input type="hidden" class="form_datetime__mirror" name="opens_after_day" id="mirror_field" value="{{ \Carbon\Carbon::parse($material->opens_after_day)->format('Y-m-d H:i') }}" readonly />
                                         </div>
                                     </div>
                                 </div>

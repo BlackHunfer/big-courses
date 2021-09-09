@@ -68,7 +68,7 @@ class Material extends Model
 
     public function for_opens_material()
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id', 'id');
     }
 
     // public function results_for_student_studied() 
