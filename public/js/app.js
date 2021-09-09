@@ -2012,26 +2012,32 @@ $(document).ready(function () {
 
   if (valueSelected == 0) {
     $('.opentype_1').addClass("hidden");
-    $('.opentype_3').addClass("hidden");
+    $('.opentype_2').addClass("hidden");
+    $('.opentype_2_1').addClass("hidden");
     $('.opentype_1').find("select").val("0");
-    $('.opentype_3').find("input").val("");
+    $('.opentype_2').find("input").val("");
+    $("#open_exact_date").prop('checked', false);
   }
 
   if (valueSelected == 1) {
     $('.opentype_1').removeClass("hidden");
-    $('.opentype_3').addClass("hidden");
-    $('.opentype_3').find("input").val("");
+    $('.opentype_2').addClass("hidden");
+    $('.opentype_2_1').addClass("hidden");
+    $('.opentype_2').find("input").val("");
+    $("#open_exact_date").prop('checked', false);
   }
 
   if (valueSelected == 2) {
     $('.opentype_1').addClass("hidden");
-    $('.opentype_3').removeClass("hidden");
-    $('.opentype_1').find("select").val("0");
+    $('.opentype_2').removeClass("hidden");
+    $('.opentype_2_1').removeClass("hidden");
+    $('.opentype_1').find("select").val("0"); // $("#open_exact_date").prop('checked', false);
   }
 
   if (valueSelected == 3) {
     $('.opentype_1').removeClass("hidden");
-    $('.opentype_3').removeClass("hidden");
+    $('.opentype_2').removeClass("hidden");
+    $('.opentype_2_1').removeClass("hidden"); // $("#open_exact_date").prop('checked', false);
   }
 
   $('.select-material_open_id').on('change', function (e) {
@@ -2040,26 +2046,68 @@ $(document).ready(function () {
 
     if (valueSelected == 0) {
       $('.opentype_1').addClass("hidden");
-      $('.opentype_3').addClass("hidden");
+      $('.opentype_2').addClass("hidden");
+      $('.opentype_2_1').addClass("hidden");
       $('.opentype_1').find("select").val("0");
-      $('.opentype_3').find("input").val("");
+      $('.opentype_2').find("input").val("");
+      $("#open_exact_date").prop('checked', false);
     }
 
     if (valueSelected == 1) {
       $('.opentype_1').removeClass("hidden");
-      $('.opentype_3').addClass("hidden");
-      $('.opentype_3').find("input").val("");
+      $('.opentype_2').addClass("hidden");
+      $('.opentype_2_1').addClass("hidden");
+      $('.opentype_2').find("input").val("");
+      $("#open_exact_date").prop('checked', false);
     }
 
     if (valueSelected == 2) {
       $('.opentype_1').addClass("hidden");
-      $('.opentype_3').removeClass("hidden");
+      $('.opentype_2').removeClass("hidden");
+      $('.opentype_2_1').removeClass("hidden");
       $('.opentype_1').find("select").val("0");
+      $("#open_exact_date").prop('checked', false);
     }
 
     if (valueSelected == 3) {
       $('.opentype_1').removeClass("hidden");
+      $('.opentype_2').removeClass("hidden");
+      $('.opentype_2_1').removeClass("hidden");
+      $("#open_exact_date").prop('checked', false);
+    }
+
+    if ($("#open_exact_date").prop('checked')) {
       $('.opentype_3').removeClass("hidden");
+    } else {
+      $('.opentype_3').addClass("hidden");
+      $('.opentype_3').find("input").val("");
+    }
+  });
+
+  if ($("#open_exact_date").prop('checked')) {
+    $('.opentype_3').removeClass("hidden");
+    $('.opentype_2').addClass("hidden");
+    $('.opentype_2').find("input").val("");
+  } else {
+    if (valueSelected == 0 || valueSelected == 1) {
+      $('.opentype_2').addClass("hidden");
+    } else {
+      $('.opentype_2').removeClass("hidden");
+    }
+
+    $('.opentype_3').addClass("hidden");
+    $('.opentype_3').find("input").val("");
+  }
+
+  $("#open_exact_date").on('click', function (e) {
+    if ($("#open_exact_date").prop('checked')) {
+      $('.opentype_3').removeClass("hidden");
+      $('.opentype_2').addClass("hidden");
+      $('.opentype_2').find("input").val("");
+    } else {
+      $('.opentype_2').removeClass("hidden");
+      $('.opentype_3').addClass("hidden");
+      $('.opentype_3').find("input").val("");
     }
   });
   $('.toast').toast('show');

@@ -186,19 +186,27 @@ class MaterialController extends Controller
                 if($request->material_open_id == '0'){
                     $resultUpdated = $result->update([
                         'active_opens' => 1,
+                        'opened_at' => null,
+                    ]);
+                }
+
+                if($request->material_open_id == '1' && $request->material_open_id != $material->material_open_id && $result->opened_at != null){
+                    $resultUpdated = $result->update([
+                        'opened_at' => null,
                     ]);
                 }
 
                 //Откроется через
-                if($request->date_open_days != $material->date_open_days || $request->date_open_hours != $material->date_open_hours || $request->date_open_minutes != $material->date_open_minutes){
+                if($request->date_open_days && $request->date_open_days != $material->date_open_days || $request->date_open_days === '0' || $request->date_open_hours && $request->date_open_hours != $material->date_open_hours || $request->date_open_hours === '0' || $request->date_open_minutes && $request->date_open_minutes != $material->date_open_minutes || $request->date_open_minutes === '0'){
                     $opened_at = Carbon::parse($result->created_at)->addDays($request->date_open_days ? $request->date_open_days : 0)->addHours($request->date_open_hours ? $request->date_open_hours : 0)->addMinutes($request->date_open_minutes ? $request->date_open_minutes : 0);
                     $resultUpdated = $result->update([
                         'opened_at' => $opened_at,
                     ]);
+                   
                 }
 
                 //откроется в выбранную дату
-                if(Carbon::parse($request->opens_after_day) != Carbon::parse($material->opens_after_day)){
+                if($request->opens_after_day && Carbon::parse($request->opens_after_day) != Carbon::parse($material->opens_after_day)){
                     $opened_at = Carbon::parse($request->opens_after_day);
                     $resultUpdated = $result->update([
                         'opened_at' => $opened_at,

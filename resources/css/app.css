@@ -34,3 +34,7 @@
 .opentype__inputs.hidden{
     display: none;
 }
+
+.col-form-label{
+    line-height: 20px;
+}
