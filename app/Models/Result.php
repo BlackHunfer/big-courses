@@ -47,7 +47,7 @@ class Result extends Model
 
     public function result_student()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'student_id');
     }
     
 }

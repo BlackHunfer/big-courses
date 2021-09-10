@@ -76,6 +76,22 @@ class MaterialController extends Controller
             $texts = null;
         }
 
+        //Закрытие доступа
+        $date_closing_access = null;
+        if($request->date_close_days || $request->date_close_days === '0' || $request->date_close_hours || $request->date_close_hours === '0' || $request->date_close_minutes || $request->date_close_minutes === '0'){
+            $date_closing_access = [
+                [
+                    'days' => $request->date_close_days
+                ], 
+                [
+                    'hours' => $request->date_close_hours
+                ], 
+                [
+                    'minutes' => $request->date_close_minutes
+                ]
+            ];
+        }
+
 
         $materialNew = Material::create([
             'title' => $request->title,
@@ -84,6 +100,12 @@ class MaterialController extends Controller
             'theme_id' => $theme->id,
             'material_type_id' => $material_type_id,
             'material_open_id' => $request->material_open_id,
+            'material_id' => $request->material_id ? $request->material_id : null,
+            'date_open_days' => $request->date_open_days ? $request->date_open_days : null,
+            'date_open_hours' => $request->date_open_hours ? $request->date_open_hours : null,
+            'date_open_minutes' => $request->date_open_minutes ? $request->date_open_minutes : null,
+            'opens_after_day' => $request->opens_after_day ? Carbon::parse($request->opens_after_day) : null,
+            'date_closing_access' => $date_closing_access ? $date_closing_access : null,
             'order' => '1',
             'created_by' => $request->user()->id,
         ]);
@@ -97,6 +119,51 @@ class MaterialController extends Controller
                     $active_opens = null;
                 }
 
+                /////////////////////
+                if($request->material_open_id == '0'){
+                    $active_opens = 1;
+                    $opened_at = null;
+                }else{
+                    $active_opens = null;
+                }
+
+                if($request->material_open_id == '1'){
+                    $opened_at = null;
+                }
+
+                //Время и дата привязки курса к студенту
+                $courseWithStudent = $student->student_courses()->where('course_id', $course->id)->first();
+                $courseToStudentDate = $courseWithStudent->pivot->created_at;
+
+                //Откроется через
+                if($request->date_open_days || $request->date_open_days === '0' || $request->date_open_hours || $request->date_open_hours === '0' || $request->date_open_minutes || $request->date_open_minutes === '0'){
+                    $opened_at = Carbon::parse($courseToStudentDate)->addDays($request->date_open_days ? $request->date_open_days : 0)->addHours($request->date_open_hours ? $request->date_open_hours : 0)->addMinutes($request->date_open_minutes ? $request->date_open_minutes : 0);
+                    //вместо now должна быть дата привязки курса к студенту
+                }
+
+                //Если открытие через полностью пустое
+                if($request->date_open_days === null && $request->date_open_hours === null && $request->date_open_minutes === null){
+                    $opened_at = null;
+                }
+
+                //откроется в выбранную дату
+                if($request->opens_after_day){
+                    $opened_at = Carbon::parse($request->opens_after_day);
+                }
+
+                //закроется через
+                if($request->date_close_days || $request->date_close_days === '0' || $request->date_close_hours || $request->date_close_hours === '0' || $request->date_close_minutes || $request->date_close_minutes === '0'){
+                    $closed_at = Carbon::parse($courseToStudentDate)->addDays($request->date_close_days ? $request->date_close_days : 0)->addHours($request->date_close_hours ? $request->date_close_hours : 0)->addMinutes($request->date_close_minutes ? $request->date_close_minutes : 0);
+                    //вместо now должна быть дата привязки курса к студенту
+                }
+
+                //Если закрытие полностью пустое
+                if($request->date_close_days === null && $request->date_close_hours === null && $request->date_close_minutes === null){
+                    $closed_at = null;
+                }
+
+                /////////////////////
+
                 // dd($active_opens);
 
                 $admin_id = $teacher->teacher_admins[0]->id;
@@ -106,6 +173,8 @@ class MaterialController extends Controller
                     'material_id' => $materialNew->id,
                     'admin_id' => $admin_id,
                     'active_opens' => $active_opens,
+                    'opened_at' => $opened_at,
+                    'closed_at' => $closed_at,
                 ]);
             }
         };
@@ -179,6 +248,7 @@ class MaterialController extends Controller
             $texts = null;
         }
 
+        //закрытие доступа
         $date_closing_access = null;
         if($request->date_close_days || $request->date_close_days === '0' || $request->date_close_hours || $request->date_close_hours === '0' || $request->date_close_minutes || $request->date_close_minutes === '0'){
             $date_closing_access = [
@@ -208,16 +278,21 @@ class MaterialController extends Controller
                 }
 
                 if($request->material_open_id == '1' && $request->material_open_id != $material->material_open_id && $result->opened_at != null){
-                    if($result != null){
+                    if($result->opened_at != null){
                         $resultUpdated = $result->update([
                             'opened_at' => null,
                         ]);
                     }
                 }
 
+                //Время и дата привязки курса к студенту
+                $student = $result->result_student;
+                $courseWithStudent = $student->student_courses()->where('course_id', $material->course->id)->first();
+                $courseToStudentDate = $courseWithStudent->pivot->created_at;
+
                 //Откроется через
                 if($request->date_open_days && $request->date_open_days != $material->date_open_days || $request->date_open_days === '0' || $request->date_open_hours && $request->date_open_hours != $material->date_open_hours || $request->date_open_hours === '0' || $request->date_open_minutes && $request->date_open_minutes != $material->date_open_minutes || $request->date_open_minutes === '0'){
-                    $opened_at = Carbon::parse($result->created_at)->addDays($request->date_open_days ? $request->date_open_days : 0)->addHours($request->date_open_hours ? $request->date_open_hours : 0)->addMinutes($request->date_open_minutes ? $request->date_open_minutes : 0);
+                    $opened_at = Carbon::parse($courseToStudentDate)->addDays($request->date_open_days ? $request->date_open_days : 0)->addHours($request->date_open_hours ? $request->date_open_hours : 0)->addMinutes($request->date_open_minutes ? $request->date_open_minutes : 0);
                     $resultUpdated = $result->update([
                         'opened_at' => $opened_at,
                     ]);
@@ -225,7 +300,7 @@ class MaterialController extends Controller
 
                 //Если открытие через полностью пустое
                 if($request->date_open_days === null && $request->date_open_hours === null && $request->date_open_minutes === null){
-                    if($result != null){
+                    if($result->opened_at != null){
                         $resultUpdated = $result->update([
                             'opened_at' => null,
                         ]);
@@ -245,7 +320,7 @@ class MaterialController extends Controller
                 $hours = $material->date_closing_access ? $material->date_closing_access[1]['hours'] : null;
                 $minutes = $material->date_closing_access ? $material->date_closing_access[2]['minutes'] : null;
                 if($request->date_close_days && $request->date_close_days != $days || $request->date_close_days === '0' || $request->date_close_hours && $request->date_close_hours != $hours || $request->date_close_hours === '0' || $request->date_close_minutes && $request->date_close_minutes != $minutes || $request->date_close_minutes === '0'){
-                    $closed_at = Carbon::parse($result->created_at)->addDays($request->date_close_days ? $request->date_close_days : 0)->addHours($request->date_close_hours ? $request->date_close_hours : 0)->addMinutes($request->date_close_minutes ? $request->date_close_minutes : 0);
+                    $closed_at = Carbon::parse($courseToStudentDate)->addDays($request->date_close_days ? $request->date_close_days : 0)->addHours($request->date_close_hours ? $request->date_close_hours : 0)->addMinutes($request->date_close_minutes ? $request->date_close_minutes : 0);
                     $resultUpdated = $result->update([
                         'closed_at' => $closed_at,
                     ]);
