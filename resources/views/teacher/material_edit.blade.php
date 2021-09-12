@@ -197,18 +197,18 @@
                                         <button type="submit" class="btn btn-success">Сохранить</button>
                                     </div>
                                 </div>
-                                @if($material->text)
+                                <!-- @if($material->text)
                                 @foreach($material->text as $key => $text)
 
-                                                <!-- <div class="row">
+                                                <div class="row">
                                                     <div class="col">
                                                         <div class="ck ck-content">
-                                                        {{--     {!! $text !!}  --}}
+                                                        {{-- {!! $text !!} --}}
                                                         </div>
                                                     </div>
-                                                </div> -->
+                                                </div>
                                                 @endforeach
-                                @endif
+                                @endif -->
                             </form>
                     
                 </div>

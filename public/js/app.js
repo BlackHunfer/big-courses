@@ -2149,12 +2149,11 @@ $(document).ready(function () {
     $(".content-slides__material").append('<div class="tab-pane fade" id="slide' + $newSlide + '" role="tabpanel"><div class="col-12"><textarea name="text[]" class="editor-text"></textarea></div></div>');
     ClassicEditor.create(document.querySelector($newSlideEditor), {
       toolbar: {
-        items: ['heading', '|', 'removeFormat', '|', 'fontColor', 'fontBackgroundColor', '|', 'fontSize', 'bold', 'italic', 'strikethrough', 'underline', 'link', '|', 'bulletedList', 'numberedList', 'alignment', '|', 'outdent', 'indent', '|', 'superscript', 'subscript', 'specialCharacters', '|', // 'imageUpload',
-        'imageInsert', 'blockQuote', 'insertTable', 'mediaEmbed', 'findAndReplace', 'undo', 'redo', 'horizontalLine', 'code', 'sourceEditing']
+        items: ['heading', '|', 'removeFormat', '|', 'fontSize', 'fontColor', 'fontBackgroundColor', '|', 'bold', 'italic', 'underline', 'strikethrough', 'link', 'bulletedList', 'numberedList', 'alignment', '|', 'outdent', 'indent', '|', 'imageInsert', 'blockQuote', 'insertTable', 'mediaEmbed', 'todoList', 'specialCharacters', 'superscript', 'subscript', 'htmlEmbed', 'codeBlock', 'horizontalLine', 'undo', 'redo', 'findAndReplace', 'sourceEditing']
       },
       language: 'ru',
       image: {
-        toolbar: ['imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side']
+        toolbar: ['imageTextAlternative', 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', 'linkImage']
       },
       table: {
         contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties']
@@ -2188,6 +2187,18 @@ $(document).ready(function () {
     // $(".content-slides__material .tab-pane[id='slide1']").show();
   });
 });
+document.querySelectorAll('oembed[url]').forEach(function (element) {
+  iframely.load(element, element.attributes.url.value);
+}); //Если закончился iframly
+//  document.querySelectorAll( 'oembed[url]' ).forEach( element => {
+//   // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+//   // to discover the media.
+//   const anchor = document.createElement( 'a' );
+//   anchor.setAttribute( 'href', element.getAttribute( 'url' ) );
+//   anchor.className = 'embedly-card';
+//   element.appendChild( anchor );
+// } );
+
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl);

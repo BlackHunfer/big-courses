@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Material;
@@ -105,32 +109,57 @@ class StudentCoursesController extends Controller
 
     public function startMaterial(Request $request, Course $course, Material $material)
     {
-
- 
-        $result = $request->user()->student_results->where('material_id', $material->id)->first();
+        $result = $material->result_for_student($material->id);
 
         $resultUpdated = $result->update([
-            'studied' => 1,
+            'started_studying' => $result->started_studying ?? now(),
         ]);
 
+        return redirect()->route('student.materials.show', [
+            'course' => $course, 
+            'material' => $material
+        ]);
+    }
 
-        // $opensWithMaterialIds = [];
-        // foreach($course->materials as $materialCourse){
-        //     if($materialCourse->material_id == $material->id){
-        //         array_push($opensWithMaterialIds, $materialCourse->id);
-        //     }
-        // }
-        // if(!empty($opensWithMaterialIds)){
+    public function finishMaterial(Request $request, Course $course, Material $material)
+    {
+        $result = $material->result_for_student($material->id);
 
-        //     $resultWithOpensMaterial = $request->user()->student_results
-        //         ->whereIn('material_id', $opensWithMaterialIds);
+        $resultUpdated = $result->update([
+            'finished_studying' => $result->finished_studying ?? now(),
+            'studied' => $result->studied ?? 1,
+        ]);
 
-        //     foreach($resultWithOpensMaterial as $resultWithOpen){
-        //         $resultWithOpenUpdated = $resultWithOpen->update([
-        //             'active_opens' => 1,
-        //         ]);
-        //     }
-        // }
-        
+        return redirect()->route('student.courses.show', [
+            'course' => $course
+        ]);
+    }
+
+    public function showMaterial(Request $request, Course $course, Material $material)
+    {   
+        if($material->material_type_id == 0){
+            if($material->text){
+                $texts = $material->text;
+                $texts = $this->paginate($texts);
+                $texts->withPath('');
+                $textsTotal = $texts->total();
+                $textsOnePrecent = 100 / $textsTotal;
+            }
+        }
+
+        return view('student.material_show', [
+            'course' => $course,
+            'material' => $material,
+            'texts' => $texts ?? null,
+            'textsTotal' => $textsTotal ?? null,
+            'textsOnePrecent' => $textsOnePrecent ?? null,
+        ]);
+    }
+
+    public function paginate($items, $perPage = 1, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

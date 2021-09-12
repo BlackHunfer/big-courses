@@ -20,6 +20,8 @@ class CreateResultsTable extends Migration
             $table->foreignId('admin_id')->constrained('users');
             $table->foreignId('material_id')->constrained('materials');
             $table->boolean('studied')->nullable();
+            $table->timestamp('started_studying', $precision = 0)->nullable();
+            $table->timestamp('finished_studying', $precision = 0)->nullable();
             $table->integer('result')->nullable();
             $table->integer('grade')->nullable();
             $table->boolean('active_opens')->nullable();

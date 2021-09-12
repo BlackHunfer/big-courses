@@ -79,22 +79,21 @@
 
                         ClassicEditor
                         .create( allEditors[i], {
-                                toolbar: {
+                            toolbar: {
                                 items: [
                                     'heading',
                                     '|',
                                     'removeFormat',
                                     '|',
+                                    'fontSize',
                                     'fontColor',
                                     'fontBackgroundColor',
                                     '|',
-                                    'fontSize',
                                     'bold',
                                     'italic',
-                                    'strikethrough',
                                     'underline',
+                                    'strikethrough',
                                     'link',
-                                    '|',
                                     'bulletedList',
                                     'numberedList',
                                     'alignment',
@@ -102,20 +101,20 @@
                                     'outdent',
                                     'indent',
                                     '|',
-                                    'superscript',
-                                    'subscript',
-                                    'specialCharacters',
-                                    '|',
-                                    // 'imageUpload',
                                     'imageInsert',
                                     'blockQuote',
                                     'insertTable',
                                     'mediaEmbed',
-                                    'findAndReplace',
+                                    'todoList',
+                                    'specialCharacters',
+                                    'superscript',
+                                    'subscript',
+                                    'htmlEmbed',
+                                    'codeBlock',
+                                    'horizontalLine',
                                     'undo',
                                     'redo',
-                                    'horizontalLine',
-                                    'code',
+                                    'findAndReplace',
                                     'sourceEditing'
                                 ]
                             },
@@ -125,7 +124,8 @@
                                     'imageTextAlternative',
                                     'imageStyle:inline',
                                     'imageStyle:block',
-                                    'imageStyle:side'
+                                    'imageStyle:side',
+                                    'linkImage'
                                 ]
                             },
                             table: {

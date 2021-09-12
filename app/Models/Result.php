@@ -23,6 +23,8 @@ class Result extends Model
         'admin_id',
         'material_id',
         'studied',
+        'started_studying',
+        'finished_studying',
         'result',
         'grade',
         'active_opens',

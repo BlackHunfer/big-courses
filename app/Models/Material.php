@@ -63,6 +63,11 @@ class Material extends Model
         return $this->results()->where("student_id", Auth::user()->id);
     }
 
+    public function result_for_student($material_id) 
+    {
+        return $this->results()->where("student_id", Auth::user()->id)->where('material_id', $material_id)->first();
+    }
+
     public function for_opens_materials() 
     {
         return $this->hasMany(Material::class, 'id', 'material_id');

@@ -79,7 +79,8 @@ Route::group(['prefix' => 'lk', 'middleware' => ['auth', 'role:student']], funct
     Route::get('courses', [StudentCoursesController::class, 'index'])->name('student.courses.index');
     Route::get('courses/{course}', [StudentCoursesController::class, 'show'])->name('student.courses.show');
 
-    Route::post('courses/{course}/material/{material}', [StudentCoursesController::class, 'startMaterial'])->name('student.materials.start');
+    Route::post('courses/{course}/material/{material}/start', [StudentCoursesController::class, 'startMaterial'])->name('student.materials.start');
+    Route::post('courses/{course}/material/{material}/finish', [StudentCoursesController::class, 'finishMaterial'])->name('student.materials.finish');
     Route::get('courses/{course}/material/{material}', [StudentCoursesController::class, 'showMaterial'])->name('student.materials.show');
 });
 

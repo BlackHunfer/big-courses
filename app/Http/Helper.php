@@ -7,7 +7,7 @@ class Helper
 
     protected static $typeMaterialIds = [
         0 => [
-            'title' => 'Теоритический урок',
+            'title' => 'Теоретический урок',
             'color' => 'bg-primary'
         ],
         1 => [
