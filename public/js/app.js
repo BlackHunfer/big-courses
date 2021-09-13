@@ -2186,6 +2186,70 @@ $(document).ready(function () {
     // firstTab.show()
     // $(".content-slides__material .tab-pane[id='slide1']").show();
   });
+  var route_prefix = "/filemanager"; // $('#lfm').filemanager('image', {prefix: route_prefix});
+  // $('#lfm').filemanager('file', {prefix: route_prefix});
+
+  var lfm = function lfm(id, type, options) {
+    var button = document.getElementById(id);
+    button.addEventListener('click', function () {
+      var route_prefix = options && options.prefix ? options.prefix : '/filemanager';
+      var target_input = document.getElementById(button.getAttribute('data-input'));
+      var target_preview = document.getElementById(button.getAttribute('data-preview')); // window.open(route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
+      // window.open(route_prefix + '?type=video', "uploadFileIframe");
+      // $("#fileModal iframe").attr('src', '/filemanager?type=video');
+      // console.log(window.opener);
+
+      if (window.opener) {
+        $("#fileModal").modal('show');
+      } else {
+        var FileWindow = window.open(route_prefix + '?type=video', "uploadFileIframe"); // $("#fileModal iframe").attr('src', '/filemanager?type=video');
+
+        $("#fileModal").modal('show');
+      }
+
+      window.SetUrl = function (items) {
+        var file_path = items.map(function (item) {
+          return item.url;
+        }).join(',');
+        $("#fileModal").modal('hide');
+        $("#lfm2").hide();
+        $("#lfm2_remove").show();
+        $("#fileModal iframe").attr("src", "about: blank"); // set the value of the desired input to image url
+
+        target_input.value = file_path;
+        target_input.dispatchEvent(new Event('change')); // clear previous preview
+
+        target_preview.innerHtml = ''; // set or change the preview image src
+
+        items.forEach(function (item) {
+          // console.log(item);
+          // let img = document.createElement('img')
+          // img.setAttribute('style', 'height: 5rem')
+          // img.setAttribute('src', item.thumb_url)
+          // target_preview.appendChild(img);
+          if (item.icon == "mp4") {
+            $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
+          } else if (item.icon == "webm") {
+            $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/webm; codecs="vp8, vorbis"></video>');
+          } else {
+            $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
+          }
+        }); // trigger change event
+
+        target_preview.dispatchEvent(new Event('change')); // $("[name=uploadFileIframe]").html('');
+      };
+    });
+  };
+
+  lfm('lfm2', 'video', {
+    prefix: route_prefix
+  });
+  $("#lfm2_remove").on("click", function () {
+    $("#lfm2").show();
+    $("#lfm2_remove").hide();
+    $('input[name=video]').val('');
+    $('#holder2').html('');
+  });
 });
 document.querySelectorAll('oembed[url]').forEach(function (element) {
   iframely.load(element, element.attributes.url.value);

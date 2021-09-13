@@ -38,6 +38,7 @@ class MaterialController extends Controller
         return view('teacher.material_create', [
             'course' => $course,
             'theme' => $theme,
+            'material_type_id' => $material_type_id,
             'material_type' => $material_type,
             'opensMaterialIds' => $opensMaterialIds,
         ]);
@@ -96,6 +97,7 @@ class MaterialController extends Controller
         $materialNew = Material::create([
             'title' => $request->title,
             'text' => $texts,
+            'video' => $request->video,
             'course_id' => $course->id,
             'theme_id' => $theme->id,
             'material_type_id' => $material_type_id,
@@ -341,6 +343,7 @@ class MaterialController extends Controller
         $materialUpdated = $material->update([
             'title' => $request->title,
             'text' => $texts,
+            'video' => $request->video,
             'material_open_id' => $request->material_open_id,
             'material_id' => $request->material_id ? $request->material_id : null,
             'date_open_days' => $request->date_open_days ? $request->date_open_days : null,

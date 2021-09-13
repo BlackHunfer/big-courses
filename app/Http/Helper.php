@@ -11,7 +11,7 @@ class Helper
             'color' => 'bg-primary'
         ],
         1 => [
-            'title' => 'Видео',
+            'title' => 'Видео урок',
             'color' => 'bg-success'
         ],
         2 => [

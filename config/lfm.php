@@ -35,7 +35,7 @@ return [
     // Ex: The private folder of user will be named as the user id.
     'private_folder_name'      => UniSharp\LaravelFilemanager\Handlers\ConfigHandler::class,
 
-    'allow_shared_folder'      => true,
+    'allow_shared_folder'      => false,
 
     'shared_folder_name'       => 'shares',
 
@@ -49,7 +49,7 @@ return [
         'file'  => [
             'folder_name'  => 'files',
             'startup_view' => 'list',
-            'max_size'     => 50000, // size in KB
+            'max_size'     => 10256, // size in KB
             'valid_mime'   => [
                 'image/jpeg',
                 'image/pjpeg',
@@ -57,19 +57,31 @@ return [
                 'image/gif',
                 'image/svg+xml',
                 'application/pdf',
-                'text/plain',
+                'video/mp4 ',
+                'video/webm',
+                'application/zip',
+                'application/x-7z-compressed',
             ],
         ],
         'image' => [
             'folder_name'  => 'photos',
             'startup_view' => 'grid',
-            'max_size'     => 50000, // size in KB
+            'max_size'     => 5256, // size in KB
             'valid_mime'   => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
                 'image/gif',
                 'image/svg+xml',
+            ],
+        ],
+        'video' => [
+            'folder_name'  => 'video',
+            'startup_view' => 'grid',
+            'max_size'     => 10256, // size in KB
+            'valid_mime'   => [
+                'video/mp4 ',
+                'video/webm',
             ],
         ],
     ],
@@ -94,15 +106,18 @@ return [
 
     'rename_file'              => false,
 
-    'rename_duplicates'        => false,
+    'rename_duplicates'        => true,
 
     'alphanumeric_filename'    => false,
 
     'alphanumeric_directory'   => false,
 
-    'should_validate_size'     => false,
+    'should_validate_size'     => true,
+    // 'max_image_size'           => ,
 
-    'should_validate_mime'     => false,
+    'should_validate_mime'     => true,
+
+    'allow_multi_user'         => true,
 
     // behavior on files with identical name
     // setting it to true cause old file replace with new one
@@ -144,12 +159,15 @@ return [
         'xls'  => 'Microsoft Excel',
         'xlsx' => 'Microsoft Excel',
         'zip'  => 'Archive',
+        '7z'   => 'Archive 7z',
         'gif'  => 'GIF Image',
         'jpg'  => 'JPEG Image',
         'jpeg' => 'JPEG Image',
         'png'  => 'PNG Image',
         'ppt'  => 'Microsoft PowerPoint',
         'pptx' => 'Microsoft PowerPoint',
+        'mp4' => 'Video MP4',
+        'webm' => 'Video WEBM'
     ],
 
     /*

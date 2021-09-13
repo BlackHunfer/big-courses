@@ -42,6 +42,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @if($material->material_type_id == 0)
                                         <div class="mb-3 row">
                                             <div class="col-12">
                                                 <label for="inputTitle" class="col-12 col-form-label">Содержание урока</label>
@@ -91,6 +92,48 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
+
+                                        @if($material->material_type_id == 1)
+                                        <div class="mb-5 mt-5 row">
+                                            <div class="col-lg-12 d-flex justify-content-center">
+                                                <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-outline-primary mt-5 mb-5" style="@if($material->video) display: none; @endif">Загрузить видео</a>
+                                                <a id="lfm2_remove" class="btn btn-outline-danger" style="@if($material->video) @else display: none; @endif">Удалить видео</a>
+                                                <input id="thumbnail2" class="form-control" type="hidden" name="video" value="{{ $material->video }}">
+                                            </div>
+                                            <div class="col-lg-12 d-flex justify-content-center mt-4">
+                                                <div id="holder2" style="max-width: 600px; max-height:350px;">
+                                                    @if($material->video)
+                                                    <video class="video_uploaded" controls="controls">
+                                                        <source src="{{ $material->video }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                                                        <source src="{{ $material->video }}" type='video/webm; codecs="vp8, vorbis"'>
+                                                    </video>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-2">
+                                                <label for="inputTitle" class="col-12 col-form-label">Дополнительный контент</label>
+                                            </div>
+                                            <div class="col-10">
+                                                    <div class="tab-content content-slides__material">
+                                                        <div class="tab-pane fade show active" id="slide1" role="tabpanel"> 
+                                                            <div class="col-12">
+                                                            @if($material->text)
+                                                                @foreach($material->text as $key => $text)
+                                                                <textarea name="text[]" class="editor-text">{{ $text }}</textarea>
+                                                                @endforeach
+                                                            @else
+                                                                <textarea name="text[]" class="editor-text"></textarea>
+                                                            @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        
+                                        @endif
                                     </div>
                                     <div class="tab-pane fade" id="settings-materialToggle" role="tabpanel">
                                         <div class="mb-3 row">
@@ -214,6 +257,19 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="fileModal" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg modal-fullscreen-lg-down">
+                            <div class="modal-content">
+                                    <div class="modal-body">
+                                        <iframe name="uploadFileIframe" src="" width="100%" height="400px"></iframe>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                    </div>
+                            </div>
+                        </div>
     </div>
 
     <script src="{{ asset('/js/ckeditor/build/ckeditor.js') }}"></script>

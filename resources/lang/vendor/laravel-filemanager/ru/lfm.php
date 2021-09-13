@@ -13,11 +13,11 @@ return [
     'menu-rename'       => 'Переименовать',
     'menu-delete'       => 'Удалить',
     'menu-view'         => 'Просмотр',
-    'menu-download'     => 'Загрузить',
+    'menu-download'     => 'Скачать',
     'menu-resize'       => 'Изменить размер',
     'menu-crop'         => 'Обрезать',
     'menu-move'         => 'Переместить',
-    'menu-multiple'     => 'Multi-выбор',
+    'menu-multiple'     => 'Множественный выбор',
 
     'title-page'        => 'Менеджер файлов',
     'title-panel'       => 'Laravel FileManager',

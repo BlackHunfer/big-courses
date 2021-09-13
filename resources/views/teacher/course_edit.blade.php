@@ -69,7 +69,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop2">
                                         <li><a class="dropdown-item" href="{{ route('materials.create', ['theme' => $theme->id, 'course' => $course->id, 'material_type_id' => 0]) }}">Теоритический урок</a></li>
-                                        <li><a class="dropdown-item" href="#">Видео</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('materials.create', ['theme' => $theme->id, 'course' => $course->id, 'material_type_id' => 1]) }}">Видео урок</a></li>
                                         <li><a class="dropdown-item" href="#">Файл</a></li>
                                         <li><a class="dropdown-item" href="#">Тест</a></li>
                                         <li><a class="dropdown-item" href="#">Задание с ручной проверкой</a></li>
