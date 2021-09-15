@@ -17,6 +17,21 @@
         </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            @if($material->video)
+                <div class="col-12 for-video-cont p-4 pt-5">
+                    <h1 class="text-center" style="color: white">{{ $material->title }}</h1>
+                </div>
+                <div class="col-lg-12 d-flex justify-content-center pb-5 mb-4 for-video-cont">
+                    <div class="pb-5">
+                        <div class="video-in-cont">
+                                <video class="video_uploaded video-js" width="100%" height="100%" id="sutdent__video" oncontextmenu="return false;">
+                                    <source src="{{ $material->video }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+                                    <source src="{{ $material->video }}" type='video/webm; codecs="vp8, vorbis"'>
+                                </video>
+                        </div>
+                    </div>
+                </div>
+            @endif
             @if($texts)
                 @if($textsTotal > 1)
                 <div class="progress" style="height: 4px;">
@@ -36,7 +51,7 @@
                     <nav class="d-flex justify-content-between flex-wrap mt-4">   
                         {{ $texts->links('vendor.pagination.custom') }}
                         @if($texts->currentPage() == $texts->lastPage())
-                            <form action="{{ route('student.materials.finish', ['material'=> $material->id, 'course' => $course->id]) }}" method="POST">
+                            <form class="ml-auto" action="{{ route('student.materials.finish', ['material'=> $material->id, 'course' => $course->id]) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-success ml-auto">Завершить</button>
                             </form>
@@ -45,16 +60,32 @@
                 </div>
             @else
                 <div class="col-12 p-6">
-                    <form action="{{ route('student.materials.finish', ['material'=> $material->id, 'course' => $course->id]) }}" method="POST">
+                    <form class="" action="{{ route('student.materials.finish', ['material'=> $material->id, 'course' => $course->id]) }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-success ml-auto">Завершить</button>
+                        <button type="submit" class="btn btn-success">Завершить</button>
                     </form>
                 </div>
             @endif
             </div>
         </div>
     </div>
+    @if($texts)
     <!-- <script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>  Если закончится iframly -->
     <script charset="utf-8" src="//cdn.iframe.ly/embed.js?api_key=9758ced385cbc5d8bab6c6"></script>
     <script src="{{ asset('/js/ckeditor/build/ckeditor.js') }}"></script>
+    @endif
+    <script>
+        document.getElementById("sutdent__video").oncontextmenu = function (e) {
+            return false;
+        };
+    </script>
+    <!-- <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" /> -->
+
+    <!-- <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet"> -->
+    <!-- <script src="{{ asset('/vendor/video.js-main/build/docs/styles/videojs.css') }}"></script> -->
+
+    <!-- <link href="https://unpkg.com/@videojs/themes@1/dist/city/index.css" rel="stylesheet"> -->
+    
+    <!-- <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script> -->
+    <!-- <script src="{{ asset('/vendor/video.js-main/build/minify.js') }}"></script> -->
 </x-app-layout>

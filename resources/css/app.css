@@ -1,9 +1,10 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-@import '../modules/bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
 @import './bootstrap-datetimepicker.min.css';
 @import './bootstrap-icons.css';
+@import 'video.js/dist/video-js.min.css';
 /* @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"); */
 /* @import '../summernote/summernote-bs4.min.css'; */
 
@@ -37,4 +38,48 @@
 
 .col-form-label{
     line-height: 20px;
+}
+
+.sutdent__video-dimensions{
+    width: 100%;
+    height: 100%;
+}
+
+.video-js .vjs-tech{
+    position: relative;
+}
+
+.video-js .vjs-big-play-button{
+    left: 50%;
+    top: 50%;
+    margin-left: -45px;
+    margin-top: -24.495px;
+    background-color: rgba(43,51,63,.7) !important;
+    border: none;
+    box-shadow: 0 0 20px 0px rgb(0 0 0 / 40%);
+    transition: 0.3s all;
+}
+
+.video-js .vjs-big-play-button:hover{
+    background-color: rgba(35, 41, 51, 0.87) !important;
+    box-shadow: 0 0 20px 0px rgb(0 0 0 / 20%);
+}
+
+.video-js:hover .vjs-big-play-button{
+    background-color: rgba(35, 41, 51, 0.87) !important;
+}
+
+.video-js .vjs-big-play-button .vjs-icon-placeholder:before{
+    top: 2px;
+}
+
+.for-video-cont{
+    background-color: rgb(0 0 0 / 83%);
+}
+
+.video-in-cont{
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 800px; 
+    max-height:550px;
 }

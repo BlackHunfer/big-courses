@@ -1,9 +1,14 @@
+const { on } = require('video.js/dist/video.min.js');
+
 window.$ = window.jQuery = require('jquery');
-bootstrap = require('../modules/bootstrap/dist/js/bootstrap.bundle.min.js');
+bootstrap = require('bootstrap/dist/js/bootstrap.bundle.min.js');
 require('./jquery.maskedinput.min');
 require('./bootstrap-datetimepicker.min');
 require('./locales/bootstrap-datetimepicker.ru');
 require('alpinejs');
+videojs = require('video.js/dist/video.min.js');
+require('video.js/dist/lang/ru.js');
+
 
 (function () {
     'use strict'
@@ -312,11 +317,11 @@ $(document).ready(function() {
         var lfm = function(id, type, options) {
           let button = document.getElementById(id);
     
-          button.addEventListener('click', function () {
+          $(button).on('click', function(){
             var route_prefix = (options && options.prefix) ? options.prefix : '/filemanager';
             var target_input = document.getElementById(button.getAttribute('data-input'));
             var target_preview = document.getElementById(button.getAttribute('data-preview'));
-    
+            // console.log(options.type);
             // window.open(route_prefix + '?type=' + options.type || 'file', 'FileManager', 'width=900,height=600');
             // window.open(route_prefix + '?type=video', "uploadFileIframe");
             // $("#fileModal iframe").attr('src', '/filemanager?type=video');
@@ -324,7 +329,7 @@ $(document).ready(function() {
             if (window.opener) {
               $("#fileModal").modal('show');
             }else{
-              var FileWindow = window.open(route_prefix + '?type=video', "uploadFileIframe");
+              var FileWindow = window.open(route_prefix + '?type=' + options.type || 'file', "uploadFileIframe");
               // $("#fileModal iframe").attr('src', '/filemanager?type=video');
               $("#fileModal").modal('show');
             }
@@ -355,8 +360,12 @@ $(document).ready(function() {
                 }else if(item.icon == "webm"){
                   $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="'+ item.url +'" type="video/webm; codecs="vp8, vorbis"></video>');
                 }else{
-                  $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="'+ item.url +'" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
+                  let img = document.createElement('img')
+                  img.setAttribute('style', 'height: 5rem')
+                  img.setAttribute('src', item.thumb_url)
+                  target_preview.appendChild(img);
                 }
+
                 
               });
     
@@ -369,7 +378,8 @@ $(document).ready(function() {
           });
         };
     
-        lfm('lfm2', 'video', {prefix: route_prefix});
+        lfm('lfm2', 'File', {prefix: route_prefix, type: 'video'});
+        lfm('lfm_files', 'File', {prefix: route_prefix});
 
         $("#lfm2_remove").on("click", function(){
           $("#lfm2").show();
@@ -400,5 +410,22 @@ document.querySelectorAll( 'oembed[url]' ).forEach( element => {
  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+});
+
+var options = {
+  "playbackRates": [0.5, 1, 1.5, 2],
+  "controls": true,
+  "language": "ru"
+};
+
+var player = videojs('sutdent__video', options, function onPlayerReady() {
+
+  // In this context, `this` is the player that was created by Video.js.
+  this.play();
+
+  // How about an event listener?
+  this.on('ended', function() {
+    videojs.log('Awww...over so soon?!');
+  });
+});
   

@@ -32,7 +32,7 @@
                                 </ul>
                                 <div class="tab-content mt-4">
                                     <div class="tab-pane fade show active" id="content-materialToggle" role="tabpanel">
-                                        <div class="mb-3 row">
+                                        <div class="mb-4 row">
                                             <label for="inputTitle" class="col-lg-2 col-form-label">Заголовок*</label>
                                             <div class="col-lg-4">
                                                 <input type="text" name="title" value="" class="form-control" id="inputTitle" required>
@@ -99,7 +99,35 @@
                                                     </div>
                                             </div>
                                         </div>
-                                        
+                                        @endif
+
+                                        @if($material_type_id == 2)
+                                        <div class="mb-4 row">
+                                            <div class="col-2">
+                                                <label for="inputTitle" class="col-12 col-form-label">Дополнительный контент</label>
+                                            </div>
+                                            <div class="col-10">
+                                                    <div class="tab-content content-slides__material">
+                                                        <div class="tab-pane fade show active" id="slide1" role="tabpanel"> 
+                                                            <div class="col-12">
+                                                                <textarea name="text[]" class="editor-text"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-2">
+                                                <label for="inputTitle" class="col-12 col-form-label">Файлы</label>
+                                            </div>
+                                            <div class="col-10">
+                                                <a id="lfm_files" data-input="thumbnail3" data-preview="holder3" class="btn btn-outline-primary mb-3">Загрузить файлы</a>
+                                                <input id="thumbnail3" class="form-control" type="hidden" name="video">
+                                                <div id="holder3">
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
                                         @endif
                                     </div>
                                     <div class="tab-pane fade" id="settings-materialToggle" role="tabpanel">
@@ -225,7 +253,7 @@
                         </div>
     </div>
 
-    @if($material_type_id == 0 || $material_type_id == 1)
+    @if($material_type_id == 0 || $material_type_id == 1 || $material_type_id == 2)
     <script src="{{ asset('/js/ckeditor/build/ckeditor.js') }}"></script>
     @endif
 </x-app-layout>

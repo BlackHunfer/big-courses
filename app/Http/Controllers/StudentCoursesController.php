@@ -137,14 +137,12 @@ class StudentCoursesController extends Controller
 
     public function showMaterial(Request $request, Course $course, Material $material)
     {   
-        if($material->material_type_id == 0){
-            if($material->text){
-                $texts = $material->text;
-                $texts = $this->paginate($texts);
-                $texts->withPath('');
-                $textsTotal = $texts->total();
-                $textsOnePrecent = 100 / $textsTotal;
-            }
+        if($material->text){
+            $texts = $material->text;
+            $texts = $this->paginate($texts);
+            $texts->withPath('');
+            $textsTotal = $texts->total();
+            $textsOnePrecent = 100 / $textsTotal;
         }
 
         return view('student.material_show', [
