@@ -2222,29 +2222,61 @@ $(document).ready(function () {
         $("#fileModal").modal('hide');
         $("#lfm2").hide();
         $("#lfm2_remove").show();
-        $("#fileModal iframe").attr("src", "about: blank"); // set the value of the desired input to image url
+        $("#fileModal iframe").attr("src", "about: blank");
+        $("#fileModal iframe").html(""); // set the value of the desired input to image url
 
         target_input.value = file_path;
         target_input.dispatchEvent(new Event('change')); // clear previous preview
 
         target_preview.innerHtml = ''; // set or change the preview image src
 
+        console.log(options.type);
         items.forEach(function (item) {
-          // console.log(item);
-          // let img = document.createElement('img')
+          console.log(item); // let img = document.createElement('img')
           // img.setAttribute('style', 'height: 5rem')
           // img.setAttribute('src', item.thumb_url)
           // target_preview.appendChild(img);
-          if (item.icon == "mp4") {
-            $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
-          } else if (item.icon == "webm") {
-            $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/webm; codecs="vp8, vorbis"></video>');
+
+          if (options.type == 'video') {
+            if (item.icon == "mp4") {
+              $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
+            } else if (item.icon == "webm") {
+              $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/webm; codecs="vp8, vorbis"></video>');
+            } else {
+              $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
+            }
           } else {
-            var img = document.createElement('img');
-            img.setAttribute('style', 'height: 5rem');
-            img.setAttribute('src', item.thumb_url);
-            target_preview.appendChild(img);
-          }
+            // var valfiles = $("#thumbnail_files").val();
+            // if(valfiles){
+            //   $("#thumbnail_files").val(valfiles + "," + item.url);
+            // }else{
+            //   $("#thumbnail_files").val(item.url);
+            // }
+            if (item.icon == "mp4" || item.icon == "webm") {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-play mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            } else if (item.icon == "zip" || item.icon == "rar" || item.icon == "7z") {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-zip mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            } else if (item.icon == "pdf") {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-pdf mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            } else if (item.icon == "doc" || item.icon == "docx") {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-text mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            } else if (item.icon == "xls" || item.icon == "xlsx") {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-spreadsheet mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            } else if (item.icon == "ppt" || item.icon == "pptx") {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-slides mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            } else if (item.icon == "png" || item.icon == "jpg" || item.icon == "jpeg" || item.icon == "gif" || item.icon == "fa-image") {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-image mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            } else {
+              $(target_preview).append('<div class="holder__item d-flex align-items-center mb-3"><input type="hidden" name="upload_file_name[]" value="' + item.name + '" readonly><input type="hidden" name="upload_file_type[]" value="' + item.icon + '" readonly><input type="hidden" name="upload_file[]" value="' + item.url + '" readonly><a href="' + item.url + '" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark mr-1 h4 mb-0"></i>' + item.name + '</a><span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span></div>');
+            }
+          } // Превьюхи картинок
+          // else{
+          //   let img = document.createElement('img')
+          //   img.setAttribute('style', 'height: 5rem')
+          //   img.setAttribute('src', item.thumb_url)
+          //   target_preview.appendChild(img);
+          // }
+
         }); // trigger change event
 
         target_preview.dispatchEvent(new Event('change')); // $("[name=uploadFileIframe]").html('');
@@ -2264,6 +2296,18 @@ $(document).ready(function () {
     $("#lfm2_remove").hide();
     $('input[name=video]').val('');
     $('#holder2').html('');
+  });
+  $(document).on('click', '.delete__file', function () {
+    $(this).parents('.holder__item').remove(); // var hrefFile = $(this).parents('.holder__item').find('.holder__file').attr("href");
+    // var hrefFiles = $("#thumbnail_files").val();
+    // $filesmass = [];
+    // $.each(hrefFiles.split(","), function(index, item) {
+    //   if(hrefFile != item){
+    //     $filesmass.push(item);
+    //   }
+    // });
+    // var stringUpdateFiles = $filesmass.join(',');
+    // $("#thumbnail_files").val(stringUpdateFiles);
   });
 });
 document.querySelectorAll('oembed[url]').forEach(function (element) {

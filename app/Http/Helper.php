@@ -15,7 +15,7 @@ class Helper
             'color' => 'bg-success'
         ],
         2 => [
-            'title' => 'Файл',
+            'title' => 'Файлы',
             'color' => 'bg-warning text-dark'
         ],
         3 => [

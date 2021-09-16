@@ -134,6 +134,75 @@
                                         </div>
                                         
                                         @endif
+                                        @if($material->material_type_id == 2)
+                                        <div class="mb-4 row">
+                                            <div class="col-2">
+                                                <label for="inputTitle" class="col-12 col-form-label">Дополнительный контент</label>
+                                            </div>
+                                            <div class="col-10">
+                                                    <div class="tab-content content-slides__material">
+                                                        <div class="tab-pane fade show active" id="slide1" role="tabpanel"> 
+                                                            <div class="col-12">
+                                                            @if($material->text)
+                                                                @foreach($material->text as $key => $text)
+                                                                <textarea name="text[]" class="editor-text">{{ $text }}</textarea>
+                                                                @endforeach
+                                                            @else
+                                                                <textarea name="text[]" class="editor-text"></textarea>
+                                                            @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-2">
+                                                <label for="inputTitle" class="col-12 col-form-label">Файлы</label>
+                                            </div>
+                                            <div class="col-10">
+                                                <a id="lfm_files" data-input="thumbnail3" data-preview="holder-files" class="btn btn-outline-primary mb-3">Загрузить файлы</a>
+                                                <input id="thumbnail3" class="form-control mb-3" type="hidden">
+                                                <div id="holder-files">
+                                                @if($material->upload_file)
+                                                    
+                                                    @foreach($material->upload_file as $file)
+                                                        <div class="holder__item d-flex align-items-center mb-3">
+                                                            <input type="hidden" name="upload_file_name[]" value="{{ $file['name'] }}" readonly>
+                                                            <input type="hidden" name="upload_file_type[]" value="{{ $file['type'] }}" readonly>
+                                                            <input type="hidden" name="upload_file[]" value="{{ $file['url'] }}" readonly>
+                                                            <a href="{{ $file['url'] }}" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi 
+                                                            @if($file['type'] == 'fa-image' || $file['type'] == 'png' || $file['type'] == 'jpg' || $file['type'] == 'jpeg' || $file['type'] == 'gif')
+                                                                bi-file-earmark-image
+                                                            @elseif($file['type'] == 'mp4' || $file['type'] == 'webm')
+                                                                bi-file-earmark-play
+                                                            @elseif($file['type'] == 'zip' || $file['type'] == 'rar' || $file['type'] == '7z')
+                                                                bi-file-earmark-zip
+                                                            @elseif($file['type'] == 'pdf')
+                                                                bi-file-earmark-pdf
+                                                            @elseif($file['type'] == 'doc' || $file['type'] == 'docx')
+                                                                bi-file-earmark-text
+                                                            @elseif($file['type'] == 'xls' || $file['type'] == 'xlsx')
+                                                                bi-file-earmark-spreadsheet
+                                                            @elseif($file['type'] == 'ppt' || $file['type'] == 'pptx')
+                                                                bi-file-earmark-slides
+                                                            @else
+                                                                bi-file-earmark
+                                                            @endif
+                                                            mr-1 h4 mb-0"></i>{{ $file['name'] }}</a>
+                                                            <span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                                    <!-- <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-zip mr-1 h4 mb-0"></i>Название файла.zip</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-text mr-1 h4 mb-0"></i>Документ.doc</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-slides mr-1 h4 mb-0"></i>Презентация.ppt</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-spreadsheet mr-1 h4 mb-0"></i>Таблица.xls</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-pdf mr-1 h4 mb-0"></i>Документ.pdf</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-image mr-1 h4 mb-0"></i>Картинка.png</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
                                     <div class="tab-pane fade" id="settings-materialToggle" role="tabpanel">
                                         <div class="mb-3 row">

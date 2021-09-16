@@ -48,7 +48,34 @@
                             </div>
                         </div>
                     @endforeach
-                    <nav class="d-flex justify-content-between flex-wrap mt-4">   
+                    @if($material->upload_file)
+                    <div class="row p-6">
+                            @foreach($material->upload_file as $file)
+                                <div class="holder__item d-flex align-items-center mb-3">
+                                    <a href="{{ $file['url'] }}" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h6"><i class="bi 
+                                    @if($file['type'] == 'fa-image' || $file['type'] == 'png' || $file['type'] == 'jpg' || $file['type'] == 'jpeg' || $file['type'] == 'gif')
+                                        bi-file-earmark-image
+                                    @elseif($file['type'] == 'mp4' || $file['type'] == 'webm')
+                                        bi-file-earmark-play
+                                    @elseif($file['type'] == 'zip' || $file['type'] == 'rar' || $file['type'] == '7z')
+                                        bi-file-earmark-zip
+                                    @elseif($file['type'] == 'pdf')
+                                        bi-file-earmark-pdf
+                                    @elseif($file['type'] == 'doc' || $file['type'] == 'docx')
+                                        bi-file-earmark-text
+                                    @elseif($file['type'] == 'xls' || $file['type'] == 'xlsx')
+                                        bi-file-earmark-spreadsheet
+                                    @elseif($file['type'] == 'ppt' || $file['type'] == 'pptx')
+                                        bi-file-earmark-slides
+                                    @else
+                                        bi-file-earmark
+                                    @endif
+                                    mr-1 h5 mb-0"></i>{{ $file['name'] }}</a>
+                                </div>
+                            @endforeach
+                    </div>    
+                    @endif
+                    <nav class="d-flex justify-content-between flex-wrap mt-4">
                         {{ $texts->links('vendor.pagination.custom') }}
                         @if($texts->currentPage() == $texts->lastPage())
                             <form class="ml-auto" action="{{ route('student.materials.finish', ['material'=> $material->id, 'course' => $course->id]) }}" method="POST">
@@ -59,6 +86,36 @@
                     </nav>
                 </div>
             @else
+                <div class="col-12 p-6 pb-0">
+                    <h2>{{ $material->title }}</h2> 
+                </div>
+                @if($material->upload_file)
+                <div class="col-12 p-6">
+                        @foreach($material->upload_file as $file)
+                                <div class="holder__item d-flex align-items-center mb-3">
+                                    <a href="{{ $file['url'] }}" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h6"><i class="bi 
+                                    @if($file['type'] == 'fa-image' || $file['type'] == 'png' || $file['type'] == 'jpg' || $file['type'] == 'jpeg' || $file['type'] == 'gif')
+                                        bi-file-earmark-image
+                                    @elseif($file['type'] == 'mp4' || $file['type'] == 'webm')
+                                        bi-file-earmark-play
+                                    @elseif($file['type'] == 'zip' || $file['type'] == 'rar' || $file['type'] == '7z')
+                                        bi-file-earmark-zip
+                                    @elseif($file['type'] == 'pdf')
+                                        bi-file-earmark-pdf
+                                    @elseif($file['type'] == 'doc' || $file['type'] == 'docx')
+                                        bi-file-earmark-text
+                                    @elseif($file['type'] == 'xls' || $file['type'] == 'xlsx')
+                                        bi-file-earmark-spreadsheet
+                                    @elseif($file['type'] == 'ppt' || $file['type'] == 'pptx')
+                                        bi-file-earmark-slides
+                                    @else
+                                        bi-file-earmark
+                                    @endif
+                                    mr-1 h5 mb-0"></i>{{ $file['name'] }}</a>
+                                </div>
+                        @endforeach
+                </div>    
+                @endif                    
                 <div class="col-12 p-6">
                     <form class="" action="{{ route('student.materials.finish', ['material'=> $material->id, 'course' => $course->id]) }}" method="POST">
                         @csrf

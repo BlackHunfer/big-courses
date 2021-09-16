@@ -6,6 +6,7 @@ use App\Http\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use App\Models\Material;
 use App\Models\Course;
@@ -93,11 +94,27 @@ class MaterialController extends Controller
             ];
         }
 
+        $upload_file = null;
+        if($request->upload_file){
+            $upload_file = [];
+            foreach($request->upload_file as $key1 => $file_url){
+                foreach($request->upload_file_name as $key2 => $file_name){
+                    foreach($request->upload_file_type as $key3 => $file_type){
+                        if($key1 == $key2 && $key2 == $key3){
+                            array_push($upload_file, ['name' => $file_name, 'url' => $file_url, 'type' => $file_type]);
+                        }
+                    }
+                    
+                }
+            }
+        }
+
 
         $materialNew = Material::create([
             'title' => $request->title,
             'text' => $texts,
             'video' => $request->video,
+            'upload_file' => $upload_file,
             'course_id' => $course->id,
             'theme_id' => $theme->id,
             'material_type_id' => $material_type_id,
@@ -213,6 +230,7 @@ class MaterialController extends Controller
             'material' => $material,
             'opensMaterialIds' => $opensMaterialIds,
             'course' => $course,
+            // 'upload_files' => $upload_files,
         ]);
     }
 
@@ -267,6 +285,20 @@ class MaterialController extends Controller
         }
 
         // dd($date_closing_access);
+        $upload_file = null;
+        if($request->upload_file){
+            $upload_file = [];
+            foreach($request->upload_file as $key1 => $file_url){
+                foreach($request->upload_file_name as $key2 => $file_name){
+                    foreach($request->upload_file_type as $key3 => $file_type){
+                        if($key1 == $key2 && $key2 == $key3){
+                            array_push($upload_file, ['name' => $file_name, 'url' => $file_url, 'type' => $file_type]);
+                        }
+                    }
+                    
+                }
+            }
+        }
 
         //Обновление opens, даты открытия и закрытия для существующих результатов этого материала
         if($request->material_open_id == '0' || $request->date_open_days != $material->date_open_days || $request->date_open_hours != $material->date_open_hours || $request->date_open_minutes != $material->date_open_minutes || Carbon::parse($request->opens_after_day) != Carbon::parse($material->opens_after_day)){
@@ -344,6 +376,7 @@ class MaterialController extends Controller
             'title' => $request->title,
             'text' => $texts,
             'video' => $request->video,
+            'upload_file' => $upload_file,
             'material_open_id' => $request->material_open_id,
             'material_id' => $request->material_id ? $request->material_id : null,
             'date_open_days' => $request->date_open_days ? $request->date_open_days : null,

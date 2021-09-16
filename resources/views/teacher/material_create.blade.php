@@ -121,10 +121,20 @@
                                                 <label for="inputTitle" class="col-12 col-form-label">Файлы</label>
                                             </div>
                                             <div class="col-10">
-                                                <a id="lfm_files" data-input="thumbnail3" data-preview="holder3" class="btn btn-outline-primary mb-3">Загрузить файлы</a>
-                                                <input id="thumbnail3" class="form-control" type="hidden" name="video">
-                                                <div id="holder3">
-                                                
+                                                <a id="lfm_files" data-input="thumbnail3" data-preview="holder-files" class="btn btn-outline-primary mb-3">Загрузить файлы</a>
+                                                <input id="thumbnail3" class="form-control mb-3" type="hidden">
+                                                <!-- <input id="thumbnail_files" class="form-control mb-3" type="hidden" name="upload_file" readonly> -->
+                                                <div id="holder-files">
+                                                    <!-- <div class="holder__item d-flex align-items-center mb-3">
+                                                        <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-0 h5"><i class="bi bi-file-earmark-zip mr-1 h4 mb-0"></i>Название файла.zip</a>
+                                                        <span class="delete__file pt-1 ml-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить"><i class="bi bi-x-lg text-danger"></i></span>
+                                                    </div> -->
+                                                    <!-- <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-zip mr-1 h4 mb-0"></i>Название файла.zip</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-text mr-1 h4 mb-0"></i>Документ.doc</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-slides mr-1 h4 mb-0"></i>Презентация.ppt</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-spreadsheet mr-1 h4 mb-0"></i>Таблица.xls</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-pdf mr-1 h4 mb-0"></i>Документ.pdf</a>
+                                                    <a href="#" target="_blank" class="holder__file text-decoration-none d-flex align-items-center mb-3 h5"><i class="bi bi-file-earmark-image mr-1 h4 mb-0"></i>Картинка.png</a> -->
                                                 </div>
                                             </div>
                                         </div>

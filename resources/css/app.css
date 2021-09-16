@@ -83,3 +83,11 @@
     max-width: 800px; 
     max-height:550px;
 }
+
+.delete__file{
+    cursor: pointer;
+}
+
+.badge{
+    --bs-bg-opacity: 0.7 !important;
+}

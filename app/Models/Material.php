@@ -41,6 +41,7 @@ class Material extends Model
     protected $casts = [
         'text' => 'array',
         'date_closing_access' => 'array',
+        'upload_file' => 'array',
     ];
 
     public function course()
