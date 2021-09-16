@@ -30,24 +30,51 @@
                                 
                                 @foreach($theme->materialsCourseStudent as $material)
                                     <div class="card mb-2">
-                                        <div class="card-body py-2 d-flex justify-between align-items-center">
+                                        <div class="card-body py-2 d-flex justify-between align-items-start">
                                             <div class="material_with_text">
                                                 <span class="mr-2 badge {{ \App\Http\Helper::typeMaterialIdToStr($material->material_type_id)['color'] }}">
                                                     {{ \App\Http\Helper::typeMaterialIdToStr($material->material_type_id)['title'] }}
                                                 </span>
                                                 <div class="d-flex align-items-center">
-                                                <!-- <i class="bi {{ \App\Http\Helper::opensMaterialIdToStr($material->material_open_id)['icon'] }} mr-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ \App\Http\Helper::opensMaterialIdToStr($material->material_open_id)['title'] }}" style="padding-top: 3px; font-size: 1.2rem;"></i> -->
-                                                @if($material->result_for_student($material->id)->studied != null)
-                                                    <i class="bi bi-check-square-fill mr-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Пройден" style="padding-top: 3px; font-size: 1.2rem; color: #198754;"></i>
-                                                @else
-                                                    <i class="bi bi-x-square-fill mr-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Не пройден" style="padding-top: 3px; font-size: 1.2rem; color: #dc3545;"></i>
-                                                @endif
+                                                    <!-- <i class="bi {{ \App\Http\Helper::opensMaterialIdToStr($material->material_open_id)['icon'] }} mr-2" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ \App\Http\Helper::opensMaterialIdToStr($material->material_open_id)['title'] }}" style="padding-top: 3px; font-size: 1.2rem;"></i> -->
+                                                    @if($material->result_for_student($material->id)->studied != null)
+                                                        <i class="bi bi-check-square-fill mr-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Пройден" style="padding-top: 3px; font-size: 1.2rem; color: #198754;"></i>
+                                                    @else
+                                                        <i class="bi bi-x-square-fill mr-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Не пройден" style="padding-top: 3px; font-size: 1.2rem; color: #dc3545;"></i>
+                                                    @endif
 
-                                                <p class="card-text mb-0 mr-2">{{ $material->title }}</p>
+                                                    <p class="card-text mb-0 mr-2">{{ $material->title }}</p>
                                                 </div>
+                                                @if($material->upload_file)
+                                                <div class="pl-6 mt-2">
+                                                        @foreach($material->upload_file as $file)
+                                                            <div class="holder__item d-flex align-items-center mb-2">
+                                                                <a href="{{ $file['url'] }}" download class="holder__file text-decoration-none d-flex align-items-center mb-0 h6"><i class="bi 
+                                                                @if($file['type'] == 'fa-image' || $file['type'] == 'png' || $file['type'] == 'jpg' || $file['type'] == 'jpeg' || $file['type'] == 'gif')
+                                                                    bi-file-earmark-image
+                                                                @elseif($file['type'] == 'mp4' || $file['type'] == 'webm')
+                                                                    bi-file-earmark-play
+                                                                @elseif($file['type'] == 'zip' || $file['type'] == 'rar' || $file['type'] == '7z')
+                                                                    bi-file-earmark-zip
+                                                                @elseif($file['type'] == 'pdf')
+                                                                    bi-file-earmark-pdf
+                                                                @elseif($file['type'] == 'doc' || $file['type'] == 'docx')
+                                                                    bi-file-earmark-text
+                                                                @elseif($file['type'] == 'xls' || $file['type'] == 'xlsx')
+                                                                    bi-file-earmark-spreadsheet
+                                                                @elseif($file['type'] == 'ppt' || $file['type'] == 'pptx')
+                                                                    bi-file-earmark-slides
+                                                                @else
+                                                                    bi-file-earmark
+                                                                @endif
+                                                                mr-1 h5 mb-0"></i>{{ $file['name'] }}</a>
+                                                            </div>
+                                                        @endforeach
+                                                </div>    
+                                                @endif
                                                
                                             </div>
-                                            <div class="material_with_btns d-flex">
+                                            <div class="material_with_btns d-flex" style="padding-top: 13px;">
                                                 @if($material->result_for_student($material->id)->closed_at)
                                                     <?php
                                                             $close_day = \Carbon\Carbon::parse($material->result_for_student($material->id)->closed_at);
