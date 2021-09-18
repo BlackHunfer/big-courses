@@ -2239,11 +2239,11 @@ $(document).ready(function () {
 
           if (options.type == 'video') {
             if (item.icon == "mp4") {
-              $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
+              $(target_preview).html('<video class="video_uploaded" controls="controls" controlsList="nodownload"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
             } else if (item.icon == "webm") {
-              $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/webm; codecs="vp8, vorbis"></video>');
+              $(target_preview).html('<video class="video_uploaded" controls="controls" controlsList="nodownload"><source src="' + item.url + '" type="video/webm; codecs="vp8, vorbis"></video>');
             } else {
-              $(target_preview).html('<video class="video_uploaded" controls="controls"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
+              $(target_preview).html('<video class="video_uploaded" controls="controls" controlsList="nodownload"><source src="' + item.url + '" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"></video>');
             }
           } else {
             // var valfiles = $("#thumbnail_files").val();
@@ -2329,7 +2329,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 var options = {
   "playbackRates": [0.5, 1, 1.5, 2],
   "controls": true,
-  "autoplay": false,
+  // "autoplay": false,
   "language": "ru"
 };
 var player = videojs('sutdent__video', options, function onPlayerReady() {

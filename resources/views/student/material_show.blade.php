@@ -24,10 +24,16 @@
                 <div class="col-lg-12 d-flex justify-content-center pb-5 mb-4 for-video-cont">
                     <div class="pb-5">
                         <div class="video-in-cont">
-                                <video class="video_uploaded video-js" autoplay="false" width="100%" height="100%" id="sutdent__video" oncontextmenu="return false;">
+                            <script>
+                                document.write('<video class="video_uploaded video-js" width="100%" height="100%" id="sutdent__video" oncontextmenu="return false;" controlsList="nodownload"><source src="{{ $material->video }}" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"><source src="{{ $material->video }}" type="video/webm; codecs="vp8, vorbis"></video>');
+                            </script>
+                            <noscript>
+                                <p class="text-light">Для отображения видео включите JavaScript в настройках браузера</p>
+                            </noscript>
+                                <!-- <video class="video_uploaded video-js" width="100%" height="100%" id="sutdent__video" oncontextmenu="return false;" controlsList="nodownload">
                                     <source src="{{ $material->video }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
                                     <source src="{{ $material->video }}" type='video/webm; codecs="vp8, vorbis"'>
-                                </video>
+                                </video> -->
                         </div>
                     </div>
                 </div>

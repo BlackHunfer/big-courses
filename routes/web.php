@@ -31,7 +31,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/storage/{file_name}', FileController::class)->where(['file_name' => '.*'])->middleware(['auth']);
+//    ^([A-z0-9-_+]+\/)*([A-z0-9-\.]+)(\?\d+)?$ вместо .* для защиты. Но нужно настроить имена файлов при загрузке в файловый менеджер
+Route::get('/storage/{file_name}', FileController::class)->where(['file_name' => '.*'])->middleware(['auth']); 
 
 Route::group(['middleware' => ['auth', 'role:administrator']], function() {
     Route::resource('cities', CityController::class)->except([

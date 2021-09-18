@@ -107,7 +107,7 @@
                                             <div class="col-lg-12 d-flex justify-content-center mt-4">
                                                 <div id="holder2" style="max-width: 600px; max-height:350px;">
                                                     @if($material->video)
-                                                    <video class="video_uploaded" controls="controls">
+                                                    <video class="video_uploaded" controls="controls" controlsList="nodownload">
                                                         <source src="{{ $material->video }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
                                                         <source src="{{ $material->video }}" type='video/webm; codecs="vp8, vorbis"'>
                                                     </video>
