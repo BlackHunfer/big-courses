@@ -339,7 +339,7 @@ $(document).ready(function() {
                 return item.url;
               }).join(',');
               $("#fileModal").modal('hide');
-              $("#lfm2").hide();
+              $("#add_video").hide();
               $("#lfm2_remove").show();
               $("#fileModal iframe").attr("src", "about: blank");
               $("#fileModal iframe").html("");
@@ -416,7 +416,7 @@ $(document).ready(function() {
         lfm('lfm_files', 'File', {prefix: route_prefix});
 
         $("#lfm2_remove").on("click", function(){
-          $("#lfm2").show();
+          $("#add_video").show();
           $("#lfm2_remove").hide();
           $('input[name=video]').val('');
           $('#holder2').html('');
@@ -465,6 +465,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 var options = {
   "playbackRates": [0.5, 1, 1.5, 2],
   "controls": true,
+  "autoplay": false,
   "language": "ru"
 };
 

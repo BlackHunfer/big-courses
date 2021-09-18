@@ -24,7 +24,7 @@
                 <div class="col-lg-12 d-flex justify-content-center pb-5 mb-4 for-video-cont">
                     <div class="pb-5">
                         <div class="video-in-cont">
-                                <video class="video_uploaded video-js" width="100%" height="100%" id="sutdent__video" oncontextmenu="return false;">
+                                <video class="video_uploaded video-js" autoplay="false" width="100%" height="100%" id="sutdent__video" oncontextmenu="return false;">
                                     <source src="{{ $material->video }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
                                     <source src="{{ $material->video }}" type='video/webm; codecs="vp8, vorbis"'>
                                 </video>
@@ -86,9 +86,11 @@
                     </nav>
                 </div>
             @else
-                <div class="col-12 p-6 pb-0">
+                @if(!$material->video)
+                <div class="col-12 p-6 pb-0 text-center">
                     <h2>{{ $material->title }}</h2> 
                 </div>
+                @endif
                 @if($material->upload_file)
                 <div class="col-12 p-6">
                         @foreach($material->upload_file as $file)

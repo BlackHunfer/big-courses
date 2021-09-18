@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/tinker": "^2.5",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "unisharp/laravel-filemanager": "^2.2"
     },
     "require-dev": {

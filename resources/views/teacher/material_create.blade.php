@@ -76,7 +76,10 @@
                                         @if($material_type_id == 1)
                                         <div class="mb-5 mt-5 row">
                                             <div class="col-lg-12 d-flex justify-content-center">
-                                                <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-outline-primary mt-5 mb-5">Загрузить видео</a>
+                                                <div id="add_video" class="mt-5 mb-5 text-center">
+                                                    <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-outline-primary">Загрузить видео</a>
+                                                    <p class="small mb-0 mt-1">Макс. размер видео: 4 ГБ</p>
+                                                </div>
                                                 <a id="lfm2_remove" class="btn btn-outline-danger" style="display: none;">Удалить видео</a>
                                                 <input id="thumbnail2" class="form-control" type="hidden" name="video">
                                             </div>

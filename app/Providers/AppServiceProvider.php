@@ -14,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        //Переопределение класса для Laravel filemanager
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('UniSharp\LaravelFilemanager\Handlers\ConfigHandler', 'App\Vendor\ConfigFileManagerHandler');
     }
 
     /**

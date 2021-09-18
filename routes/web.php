@@ -10,6 +10,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\StudentCoursesController;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/storage/{file_name}', FileController::class)->where(['file_name' => '.*'])->middleware(['auth']);
 
 Route::group(['middleware' => ['auth', 'role:administrator']], function() {
     Route::resource('cities', CityController::class)->except([

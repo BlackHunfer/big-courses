@@ -108,7 +108,7 @@ return [
         'video' => [
             'folder_name'  => 'video',
             'startup_view' => 'grid',
-            'max_size'     => 10256, // size in KB
+            'max_size'     => 4194304, // size in KB 4ГБ
             'valid_mime'   => [
                 'video/mp4',
                 'video/webm',
@@ -133,7 +133,7 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'disk'                     => 'public',
+    'disk'                     => 'private',
 
     'rename_file'              => false,
 
